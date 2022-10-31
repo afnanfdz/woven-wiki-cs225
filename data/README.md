@@ -4,7 +4,9 @@ Due to the files being larger than 25mB, [the data for this project must be down
 
 We have three datasets:
 
-- `wiki-topcats.txt` is a list of pairs of Wikipedia article IDs. Interpret each line as as: 'key' has a link to 'value'. This means we're working with directed edges. This dataset will be what we use to construct our graph(s).
+## `wiki-topcats.txt`
+ 
+A list of pairs of Wikipedia article IDs. Interpret each line as as: 'key' has a link to 'value'. This means we're working with directed edges. This dataset will be what we use to construct our graph(s).
   
 Preview (first ten lines):
 ```
@@ -20,7 +22,9 @@ Preview (first ten lines):
 3 1101827
 ```
 
-- `wiki-topcats-page-names.txt` is a list of Wikipedia article IDs paired to their article name. Interpret as: 'key' has the name 'value'. We expect this dataset to be useful for user interface for knowing which article belongs to an ID. 
+## `wiki-topcats-page-names.txt` 
+
+A list of Wikipedia article IDs paired to their article name. Interpret as: 'key' has the name 'value'. We expect this dataset to be useful for user interface for knowing which article belongs to an ID. 
 
 Preview (first five lines):
 ```
@@ -31,7 +35,9 @@ Preview (first five lines):
 4 Zariski's main theorem
 ```
 
--  `wiki-topcats-categories.txt` is a list of Wikipedia categories and its corresponding list of associated IDs. Interpret as 'key' is the category for 'values'. Possibly fun for filtering.
+##  `wiki-topcats-categories.txt`
+
+A list of Wikipedia categories and its corresponding list of associated IDs. Interpret as 'key' is the category for 'values'. Possibly fun for filtering.
 
 Preview (first three lines, shortened):
 ```
