@@ -1,4 +1,4 @@
-# Woven Wikis 
+# WOVEN WIKIS 
 
 Getting from article A to article B in [witty quip goes here]
 
@@ -6,8 +6,12 @@ Getting from article A to article B in [witty quip goes here]
 
 [The data for this project can be obtained here](http://snap.stanford.edu/data/wiki-topcats.html) and should be extracted into the `./data` folder.
 
+#### ====================================================================================
 
-#### ============================
+# PROJECT PROPOSAL
+
+
+#### ====================================================================================
 
 # TEAM CONTRACT
 
