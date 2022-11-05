@@ -23,6 +23,9 @@ vector<pair<unsigned int, unsigned int>> importEdges(string file_dir);
  *
  * Does NOT assume the nodes are indexed in order, nor are without gaps.
  *
+ * Within the scope of the CS225 project, we only expect this function to be used
+ * on the topcats data.
+ *
  * @param file_dir: Directory to the .txt file
  * @param file_out_dir: Directory to output the new file
  * @param new_size: The largest node index to allow
@@ -36,6 +39,9 @@ void shrinkEdgeData(string file_dir, string file_out_dir, int max_idx);
  * the names of nodes equal to or below the input max_idx
  *
  * Assumes the nodes are listed in increasing index number.
+ *
+ * Within the scope of the CS225 project, we only expect this function to be used
+ * on the topcats data.
  *
  * @param file_dir: Directory to the .txt file
  * @param file_out_dir: Directory to output the new file
