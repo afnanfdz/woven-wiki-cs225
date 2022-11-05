@@ -9,9 +9,11 @@ using std::ifstream;
 using std::ofstream;
 using std::pair;
 using std::string;
+using std::stringstream;
 using std::vector;
 
 /***
+ * Proof of concept, sort of, may be removed later
  * @param file_dir: directory to the .txt file
  * @return a vector of directed edge relationships of numbered nodes
  **/
@@ -50,3 +52,5 @@ void shrinkEdgeData(string file_dir, string file_out_dir, int max_idx);
  * @return Writes the file to `file_out_dir`
  */
 void shrinkNames(string file_dir, string file_out_dir, int max_idx);
+
+void shrinkCategories(string file_dir, string file_out_dir, int max_idx);

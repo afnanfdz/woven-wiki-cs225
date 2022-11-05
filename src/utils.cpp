@@ -91,3 +91,61 @@ void shrinkNames(string file_dir, string file_out_dir, int max_idx)
     file.close();
     output.close();
 }
+
+void shrinkCategories(string file_dir, string file_out_dir, int max_idx)
+{
+    ofstream output;
+    ifstream file;
+
+    file.open(file_dir);
+    output.open(file_out_dir);
+
+    if (file.is_open())
+    {
+        string line;
+
+        while (getline(file, line))
+        {
+            string cat;
+            vector<int> nodes;
+
+            stringstream ss(line);
+
+            // The first item is always a category name
+            ss >> cat;
+
+            int node;
+
+            while (ss >> node)
+            {
+                // Only allow nodes under the limit!
+                if (node < max_idx)
+                    nodes.push_back(node);
+            }
+
+            // Do not write empty categories
+            if (!nodes.empty())
+            {
+                output << cat << " ";
+                for (size_t i = 0; i < nodes.size(); i++)
+                {
+                    output << nodes[i];
+                    if (i != nodes.size() - 1)
+                    {
+                        output << " ";
+                    }
+                }
+
+                output << "\n";
+            }
+        }
+    }
+    else
+    {
+        string err = "Could not find input directory " + file_dir + "; assuming this is used on the Topcats data please manually install it first (see data/README.md)";
+        throw std::invalid_argument(err);
+    }
+
+    file.close();
+    output.close();
+}
