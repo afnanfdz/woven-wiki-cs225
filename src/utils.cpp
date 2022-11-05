@@ -41,12 +41,12 @@ void shrinkEdgeData(string file_dir, string file_out_dir, int max_idx)
 
     if (file.is_open())
     {
-        string node_1;
-        string node_2;
+        int node_1;
+        int node_2; // eg of a line: 12 245325
 
         while (file >> node_1 >> node_2)
         {
-            if (stoi(node_1) <= max_idx && stoi(node_2) <= max_idx)
+            if (node_1 <= max_idx && node_2 <= max_idx)
             {
                 output << node_1 << " " << node_2 << "\n";
             }
