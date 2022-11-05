@@ -5,4 +5,7 @@
 /build
 
 # Datsets are too damn big
-wiki*.txt
+wiki-topcats*.txt
+
+# Ignore any of our dummy/test datasets
+/data/gendata/*.txt
