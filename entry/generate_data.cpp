@@ -1,3 +1,13 @@
+/**
+ * @file generate_data.cpp
+ *
+ * Uses functions written in utils.h to generate shrunken
+ * versions of the original topcats data, either so that
+ * we can fit it in the GitHub or want quicker result
+ * times during testing
+ *
+ */
+
 #include "utils.h"
 
 #include <iostream>
