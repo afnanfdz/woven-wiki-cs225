@@ -62,6 +62,11 @@ As for how we represent the graph, we currently believe it's ideal to store a `m
 
 ## Graph Algorithms
 
+Since our goals revolve around finding a shortest path from one node to another, we are looking to implement:
+
+- For the traversal, the **Breadth-first Search**
+- For the covered algorithms, **Djikstra's Algorithm** for finding a shortest path. We are open to considering the Floyd-Warshall if we find it is more suitable to our use case.
+- For the complex/uncovered option, we are most likely considering the **A\* Search** as a natural continuation to Djikstra's. We have also considered Betweenness Centrality, as a fun and interesting option.
 
 ##### Function Inputs
 To create the graph we believe it would be ideal to extract the edge data into a `vector` of `pair`s, where each `pair` represents an edge from `pair.first` to `pair.second`, which would then be the input of our graph class's constructor.
@@ -84,11 +89,10 @@ By end of Week 1 (Nov 4): Get the proposal written to understand what's ahead of
 
 By end of Week 2 (Nov 13): Conceptualize a method to store and track search paths; implement breadth-first search with path tracking
 
-By end of Week 3 (Nov 20): Implement a shortest-path algorithm (Djikstra's or Floyd-Warshall)
+We won't consider the fall break as an official 'week' for work plans, but some of the group expects to get a lot done within that time.
 
-By end of Week 4 (Nov 27): Implement a 'complex' algorithm for better searching or something else that can be done with this data
+By end of Week 4 (Nov 27): Implement a shortest-path algorithm (Djikstra's or Floyd-Warshall)
 
-By end of Week 5 (Dec 4): "Spare time" if plans above take longer than expected
+By end of Week 5 (Dec 4): Implement a 'complex' algorithm for better searching or something else that can be done with this data
 
 By Deadline (Dec 8): Submission!
-
