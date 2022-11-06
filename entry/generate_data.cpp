@@ -5,7 +5,6 @@
  * versions of the original topcats data, either so that
  * we can fit it in the GitHub or want quicker result
  * times during testing
- *
  */
 
 #include "utils.h"
