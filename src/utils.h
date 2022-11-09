@@ -14,7 +14,7 @@ using std::vector;
 
 /***
  * Proof of concept, sort of, may be removed later
- * @param file_dir: directory to the .txt file
+ * @param file_dir directory to the .txt file
  * @return a vector of directed edge relationships of numbered nodes
  **/
 vector<pair<unsigned int, unsigned int>> importEdges(string file_dir);
@@ -28,9 +28,9 @@ vector<pair<unsigned int, unsigned int>> importEdges(string file_dir);
  * Within the scope of the CS225 project, we only expect this function to be used
  * on the topcats data.
  *
- * @param file_dir: Directory to the .txt file
- * @param file_out_dir: Directory to output the new file
- * @param new_size: The largest node index to allow
+ * @param file_dir Directory to the .txt file
+ * @param file_out_dir Directory to output the new file
+ * @param new_size The largest node index to allow
  *
  * @return Writes the file to `file_out_dir`
  */
@@ -45,9 +45,9 @@ void shrinkEdgeData(string file_dir, string file_out_dir, int max_idx);
  * Within the scope of the CS225 project, we only expect this function to be used
  * on the topcats data.
  *
- * @param file_dir: Directory to the .txt file
- * @param file_out_dir: Directory to output the new file
- * @param new_size: The largest node index to allow
+ * @param file_dir Directory to the .txt file
+ * @param file_out_dir Directory to output the new file
+ * @param new_size The largest node index to allow
  *
  * @return Writes the file to `file_out_dir`
  */
