@@ -16,7 +16,7 @@ private:
      * Simple container for data
      * Expected to be used on the heap
      */
-    struct Node
+    struct Vertex
     {
         T val_;
     };
@@ -48,6 +48,11 @@ public:
      */
     ~Graph();
 
+    bool addEdge(T from, T to);
+    bool addVertex(T val);
+    bool hasEdge(T from, T to);
+    bool hasVertex(T val);
+
 private:
     /**
      * Helper for the copy and assignment constructor.
@@ -59,6 +64,9 @@ private:
      */
     void clear();
 
+    bool hasEdge(T from, T to);
+    bool hasVertex(T node);
+
 private:
-    std::unordered_map<Node *, std::list<Node *>> graph_;
+    std::unordered_map<Node *, std::list<Vertex *>> graph_;
 };
