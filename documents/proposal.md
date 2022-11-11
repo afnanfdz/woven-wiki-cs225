@@ -1,5 +1,7 @@
 ## Leading Question 
-We have a dataset of Wikipedia articles, and all the articles they contain hyperlinks to. This gives us a directed node network of Wikipedia articles. What we wish to solve is: What is the minimum amount of link 'clicks' to get from article A to B? We wish to implement a shortest-path algorithm to solve this, and we wish to make said algorithm as efficient as possible, starting from the 'naive' Breadth-first search to the more nuanced algorithms.
+We have a dataset of Wikipedia articles, and all the articles they contain hyperlinks to. This gives us a directed vertex network of Wikipedia articles. What we wish to solve is: What is the minimum amount of link 'clicks' to get from article A to B? We wish to implement a shortest-path algorithm to solve this, and we wish to make said algorithm as efficient as possible, starting from the 'naive' Breadth-first search to the more nuanced algorithms.
+
+ADDITIONAL THOUGHT: Motivated from the lectures on Monte Carlo simulation, we also find it interesting to attempt to answer: "What is the average path length from one Wikipedia article to another?" We may solve this by utilizing our search algorithms, alongside random start- and end-vertex selection.
 
 ## Dataset Acquisition and Processing
 
@@ -52,47 +54,48 @@ Category:Skin_conditions_resulting_from_physical_factors; 971 973 1166 [...]
 ```
 
 ##### Data Correction
-We trust this dataset to be almost entirely unproblematic. According to the [source page](http://snap.stanford.edu/data/wiki-topcats.html), the articles in the set should only consist of strongly-connected components, so we don't believe we would find any 'uninteresting' articles with little to no inward or outward edges. If we do, we may remove them for being 'uninteresting'.
+
+| Possibile "Problems" | Source | Method of Detection | Method of Correction | Worth Removing? |
+| --- | :--- | --- | --- | --- |
+The graph is disconnected | Using a reduced dataset (we lessen the range of nodes because the original dataset is too large); also generally highly possible given we're using directed edges. | Implement a DisjointedSet class; graph is disconnected if number of DSet roots $>1$ | Choose a 'primary' graph; delete all vertices belonging to the other(s) | Probably not; search algorithms can simply return a 'not found' status. Possibly required for Betweenness Centrality though
+A vertex is childless | Corresponding Wikipedia article has no outgoing links | Iterate through all vertices; childless vertex has empty list of edges | Remove vertex from data structure | No. It's simply a "dead end" and still searchable as a destination.
+A vertex is an orphan | No other Wikipedia article has links to this article | Starting at each vertex, mark all its unfound children (but NOT itself) as 'found'. Unfound vertices are orphans | Remove vertex from data structure | No. It is still a valid starting point.
+A vertex is a childless orphan | Both of the above | Satisfies both above conditions | Remove vertex from data structure | Yes. It cannot be found and it cannot be a starting point. It's as "uninteresting" for this project as a piece of data can get.
+
 
 ##### Data Storage
 The data for article edges would be saved in our undirected edge graph implementation. The worst case for this is that every article has a link to all other articles (except itself). If every edge was 1 unit of space, then the worst case for $n$ articles would be $n (n-1)$ edges. We conclude that the Big-O for storing our data is $O(n^2)$.
 
-As for how we represent the graph, we currently believe it's ideal to store a `map` of `<unsigned int, list<unsigned int>>`, i.e. an adjacency list.
+As for how we represent the graph of directed, unweighted edges and vertices, we currently believe it's ideal to store a `unordered_map` of `<Vertex, list<Vertex>>`, i.e. an adjacency list.
 
 
 ## Graph Algorithms
 
-Since our goals revolve around finding a shortest path from one node to another, we are looking to implement:
+Since our goals revolve around finding a shortest path from one vertex to another, we are looking to implement:
 
-- For the traversal, the **Breadth-first Search**
-- For the covered algorithms, **Djikstra's Algorithm** for finding a shortest path. We are open to considering the Floyd-Warshall if we find it is more suitable to our use case.
-- For the complex/uncovered option, we are most likely considering the **A\* Search** as a natural continuation to Djikstra's. We have also considered Betweenness Centrality, as a fun and interesting option.
+| Algorithm | Description | Input | Output | Worst-Case Time Efficiency | Worst-Case Space Efficiency | Information Sources
+| --- | --- | --- | --- | --- | --- | --- |
+| Breadth-First Search | Simple BFS | Beginning vertex | Destination vertex | Worst case, all vertices and edges are visited once: $O(\|V\| + \|E\|)$ | All the vertices have been committed to memory: $O(\|V\|)$ | [Wikipedia: BFS](https://en.wikipedia.org/wiki/Breadth-first_search)
+| Iterative Deepening Depth-First Search | Same time complexity as BFS but more space-efficient | Beginning vertex | Destination vertex | $O(\|V+ \|E\|)$ | The maximum depth of the graph, $O(d)$ | [Wikipedia: IDDFS](https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search)
+| Betweenness Centrality | A measure of centrality of vertices, based on how many shortest-paths of vertex pairs pass through them | A whole graph | A graph or at least a list of Wikipedia articles and their measure of betweenness centrality | $O(\|V\|\|E\|)$ using Brandes's algorithm with unweighted graph | Either the memory required to store information for each vertex, $O(\|V\|)$, or the worst-case of our best search algorithm ($O(d)$ if IDDFS) |[Wikipedia: Betweenness Centrality](https://en.wikipedia.org/wiki/Betweenness_centrality), [Brandes's Algorithm](http://snap.stanford.edu/class/cs224w-readings/brandes01centrality.pdf), [Brandes's Algorithm alternative reference](https://www.cl.cam.ac.uk/teaching/1617/MLRD/handbook/brandes.pdf)
 
-##### Function Inputs
-To create the graph we believe it would be ideal to extract the edge data into a `vector` of `pair`s, where each `pair` represents an edge from `pair.first` to `pair.second`, which would then be the input of our graph class's constructor.
+### Other Choices
 
-For the shortest-path function, our known inputs would be an `unsigned int` that represents a **starting** article ID, and another `unsigned int` of another article ID that would be our **destination**. 
+| Algorithm | Description | Input | Output | Worst-Case Time Efficiency | Worst-Case Space Efficiency | Information Sources
+| --- | --- | --- | --- | --- | --- | --- |
+Djikstra's Algorithm | We *can* add weights to the graph. Let's say we wanted higher edge weightages for vertices of the same Category, so that our search tries to make minimal category jumps to its destination. | Beginning vertex | Destination vertex | $O(\|E\| + \|V\|\log\|V\|)$  | All the vertices have been committed to memory: $O(\|V\|)$ | [Wikipedia: Djikstra's Algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 
-##### Function Outputs
-We wish to have the following outputs, in descending priority:
-- At the very least, we can verify whether article A has a path to article B (the search function has found the destination.)
-- If possible, we also wish to output the number of steps taken to reach article B. (the distance between two articles.)
-- At best, we wish to print our shortest path, i.e. the sequence of Wikipedia articles traversed to reach article B.
-- If it's somehow possible, we wish to verify that the output path was indeed the shortest path.
-
-##### Function Efficiency
-We understand a simple breadth-first search to be the most 'naive' implementation of this function, so the worst-case time performance for our function would be $O(V + E)$. We don't have a specific performance target yet, but we certainly hope as we attempt more nuanced algorithms we can achieve something better than $O(V + E)$ worst-case. As for memory, we have not figured this out as not only we are performing a search, we are also storing paths as the search happens, which takes up more memory. Our memory performance hinges strongly on how we choose to store and represent the paths taken during search.
 
 ## Timeline
 
 By end of Week 1 (Nov 4): Get the proposal written to understand what's ahead of us; choose the algorithms we want to implement; possibly begin implementing importing data into a graph structure
 
-By end of Week 2 (Nov 13): Conceptualize a method to store and track search paths; implement breadth-first search with path tracking
+By end of Week 2 (Nov 13): Conceptualize a method to store and track search paths; implement breadth-first search
 
 We won't consider the fall break as an official 'week' for work plans, but some of the group expects to get a lot done within that time.
 
-By end of Week 4 (Nov 27): Implement a shortest-path algorithm (Djikstra's or Floyd-Warshall)
+By end of Week 4 (Nov 27): Implement IDDFS and Betweenness Centrality
 
-By end of Week 5 (Dec 4): Implement a 'complex' algorithm for better searching or something else that can be done with this data
+By end of Week 5 (Dec 4): Begin working on the presentation
 
 By Deadline (Dec 8): Submission!
