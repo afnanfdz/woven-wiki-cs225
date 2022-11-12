@@ -1,24 +1,30 @@
 #pragma once
 
+#include "edge.h"
+
 #include <unordered_map>
 #include <list>
 
+using std::list;
+using std::unordered_map;
+
 /**
- * Graph class. Stores nodes in an unordered map to optimize for access time.
- * Stores neighbors in a list to optimize insertion time.
+ * Graph class. Inspired by the CS225 lib but meant to be more lightweight.
  *
  */
-template <class T>
+template <class V>
 class Graph
 {
 private:
-    /**
-     * Simple container for data
-     * Expected to be used on the heap
-     */
-    struct Vertex
+    struct Edge
     {
-        T val_;
+        V from;
+        V to;
+        int weight;
+
+        bool operator==(Edge &other) const;
+        bool operator>(Edge &other) const;
+        bool operator<(Edge &other) const;
     };
 
 public:
@@ -48,10 +54,28 @@ public:
      */
     ~Graph();
 
-    bool addEdge(T from, T to);
-    bool addVertex(T val);
-    bool hasEdge(T from, T to);
-    bool hasVertex(T val);
+    /**
+     * Adds an edge to the graph.
+     * Ensure that 'from' and 'to' are already registered vertices
+     *
+     * @returns whether the operation was succesful. (false if edge exists already)
+     */
+    bool addEdge(V from, V to);
+
+    /**
+     * Adds a vertex to the graph.
+     */
+    bool addVertex(V val);
+
+    /**
+     * Returns whether the edge exists in the graph.
+     */
+    bool hasEdge(V from, V to);
+
+    /**
+     * Returns whether the vertex exists in the graph.
+     */
+    bool hasVertex(V val);
 
 private:
     /**
@@ -64,9 +88,6 @@ private:
      */
     void clear();
 
-    bool hasEdge(T from, T to);
-    bool hasVertex(T node);
-
 private:
-    std::unordered_map<Node *, std::list<Vertex *>> graph_;
+    unordered_map<V, list<Edge>> graph_;
 };
