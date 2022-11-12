@@ -5,14 +5,17 @@
  * if we expect to be doing something very often.
  */
 
-#include "wikisearch.h"
-// #include "nim_graph/graph.h"
+#include "graph.h"
 
 #include <string>
 #include <iostream>
 
 int main()
 {
-    WikiSearch<int> w;
+    Graph<unsigned int> g;
+
+    g.importData("../data/gendata/wiki-nodes.txt");
+    g.print();
+
     return 0;
 }
