@@ -13,6 +13,6 @@
 
 int main()
 {
-    WikiSearch w;
+    WikiSearch<int> w;
     return 0;
 }
