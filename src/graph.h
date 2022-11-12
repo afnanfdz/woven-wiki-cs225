@@ -70,7 +70,7 @@ private:
 };
 
 /**
- * This line is why I cried and shidded and farded
+ * This line is why I cried for a whole three hours, and shidded and farded
  * @author Vucirrha Skye
  * */
 #include "graph.hpp"
