@@ -5,18 +5,14 @@
  * if we expect to be doing something very often.
  */
 
-#include <unordered_map>
-#include <utility>
+#include "wikisearch.h"
+// #include "nim_graph/graph.h"
 
-using namespace std;
+#include <string>
+#include <iostream>
 
 int main()
 {
-    unordered_map<int *, int *> m{{new int(5), new int(6)}};
-
-    for (pair<int *, int *> p : m)
-    {
-        delete p.second;
-        delete p.first;
-    }
+    WikiSearch w;
+    return 0;
 }
