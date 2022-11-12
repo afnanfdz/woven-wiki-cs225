@@ -53,7 +53,7 @@ public:
     void addVertex(V val);
 
     /**
-     * Gets all adjacent vertices to the parameter vertex.
+     * Gets all adjacent vertices to the parameter vertex
      * @param source - vertex to get neighbors from
      * @return a vector of vertices
      */
@@ -69,5 +69,8 @@ private:
         graph_;
 };
 
-// This line is why I cried and shidded and farded
+/**
+ * This line is why I cried and shidded and farded
+ * @author Vucirrha Skye
+ * */
 #include "graph.hpp"
