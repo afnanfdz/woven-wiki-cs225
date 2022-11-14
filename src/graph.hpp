@@ -82,14 +82,11 @@ void Graph<V>::addVertex(V val)
 }
 
 template <class V>
-list<V> &Graph<V>::getAdjacent(V source) const
+const list<V> &Graph<V>::getAdjacent(V source) const
 {
     return graph_.at(source);
 }
 
-/**
- * @returns a const reference to the unordered map storing vertices and edge
- */
 template <class V>
 unordered_map<V, list<V>> &Graph<V>::getGraph() const
 {

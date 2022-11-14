@@ -52,14 +52,14 @@ public:  // Public methods
     bool hasVertex(V val) const;
 
     /**
-     * Gets all adjacent vertices to the parameter vertex
+     * Gets all adjacent vertices to the parameter vertex.
      *
      * Average O(1) time (unordered_map access time).
      *
-     * @param source vertex to get neighbors from
-     * @returns a vector of vertices
+     * @param source The vertex to get neighbors from
+     * @returns A const reference to a list of vertices
      */
-    list<V> &getAdjacent(V source) const;
+    const list<V> &getAdjacent(V source) const;
 
     /**
      * @returns a const reference to the unordered map storing vertices and edge
