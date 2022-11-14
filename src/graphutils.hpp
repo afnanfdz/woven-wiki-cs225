@@ -4,9 +4,9 @@
  */
 
 template <class V>
-void Graph<V>::print()
+void Graph<V>::print() const
 {
-    for (std::pair<const V, list<V>> &p : graph_)
+    for (const std::pair<const V, list<V>> &p : graph_)
     {
         std::cout << p.first << " -> [ ";
 

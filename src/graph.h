@@ -30,6 +30,11 @@ public:  // Public methods
     void importData(string file_dir);
 
     /**
+     * Checks the map whether the key exists;
+     * if so, check if its list contains the second input
+     *
+     * Worst-case O(n) time (constant unordered_map access, then iterates through a list).
+     *
      * @param from The edge source
      * @param to The edge destination
      * @returns Whether the edge exists in the graph.
@@ -37,6 +42,10 @@ public:  // Public methods
     bool hasEdge(V from, V to) const;
 
     /**
+     * Checks the map whether the input exists as a key.
+     *
+     * Average O(1) time (unordered_map access time).
+     *
      * @param val The unique vertex value to check
      * @returns Whether the vertex exists in the graph.
      */
@@ -44,6 +53,9 @@ public:  // Public methods
 
     /**
      * Gets all adjacent vertices to the parameter vertex
+     *
+     * Average O(1) time (unordered_map access time).
+     *
      * @param source vertex to get neighbors from
      * @returns a vector of vertices
      */
@@ -57,7 +69,7 @@ public:  // Public methods
     /**
      * Prints each node and all its children
      */
-    void print();
+    void print() const;
 
 private: // Private methods
     /**
@@ -76,7 +88,7 @@ private: // Private members
 };
 
 /**
- * This line is why I cried for a whole three hours
+ * Missing this line is why I cried while debugging for too many hours
  * @author Vucirrha Skye
  * */
 #include "graph.hpp"
