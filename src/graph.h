@@ -11,7 +11,7 @@ using std::unordered_map;
 
 /**
  * Graph class. Inspired by the CS225 lib but meant to be more lightweight.
- * Unweighted. Directed.
+ * Unweighted. Directed. Values should be unique.
  */
 template <class V>
 class Graph
@@ -30,21 +30,29 @@ public:  // Public methods
     void importData(string file_dir);
 
     /**
+     * @param from The edge source
+     * @param to The edge destination
      * @returns Whether the edge exists in the graph.
      */
     bool hasEdge(V from, V to) const;
 
     /**
+     * @param val The unique vertex value to check
      * @returns Whether the vertex exists in the graph.
      */
     bool hasVertex(V val) const;
 
     /**
      * Gets all adjacent vertices to the parameter vertex
-     * @param source - vertex to get neighbors from
-     * @return a vector of vertices
+     * @param source vertex to get neighbors from
+     * @returns a vector of vertices
      */
     list<V> &getAdjacent(V source) const;
+
+    /**
+     * @returns a const reference to the unordered map storing vertices and edge
+     */
+    unordered_map<V, list<V>> &getGraph() const;
 
     /**
      * Prints each node and all its children
