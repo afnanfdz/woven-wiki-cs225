@@ -33,6 +33,9 @@ public:
      * Performs a Breadth-First Search
      * to find the shortest path from start to goal.
      *
+     * Worst case time: O(V).
+     * Worst case memory: O(V).
+     *
      * @param start The starting article index.
      * @param goal The destination article index.
      * @returns One shortest path from start to goal.
@@ -42,6 +45,9 @@ public:
     /**
      * Performs an Iterative Deepening Depth-First Search
      * to find the shortest path from start to goal.
+     *
+     * Worst case time: O(V).
+     * Worst case memory: O(max(depth)).
      *
      * @param start The starting article index.
      * @param goal The destination article index.
