@@ -12,13 +12,12 @@ using std::unordered_map;
 /**
  * Graph class. Inspired by the CS225 lib but meant to be more lightweight.
  * Unweighted. Directed.
- *
  */
 template <class V>
 class Graph
 {
-private:
-public:
+private: // Structs, if any! (None right now)
+public:  // Public methods
     /**
      * Default constructor. Does nothing.
      */
@@ -36,21 +35,9 @@ public:
     bool hasEdge(V from, V to) const;
 
     /**
-     * Adds an edge to the graph.
-     * Will not add duplicate edges.
-     */
-    void addEdge(V from, V to);
-
-    /**
      * @returns Whether the vertex exists in the graph.
      */
     bool hasVertex(V val) const;
-
-    /**
-     * Adds a vertex to the graph.
-     * Will replace old vertex data if existing.
-     */
-    void addVertex(V val);
 
     /**
      * Gets all adjacent vertices to the parameter vertex
@@ -64,13 +51,25 @@ public:
      */
     void print();
 
-private:
-    unordered_map<V, list<V>>
-        graph_;
+private: // Private methods
+    /**
+     * Adds an edge to the graph.
+     * Will not add duplicate edges.
+     */
+    void addEdge(V from, V to);
+    /**
+     * Adds a vertex to the graph.
+     * Will replace old vertex data if existing.
+     */
+    void addVertex(V val);
+
+private: // Private members
+    unordered_map<V, list<V>> graph_;
 };
 
 /**
- * This line is why I cried for a whole three hours, and shidded and farded
+ * This line is why I cried for a whole three hours
  * @author Vucirrha Skye
  * */
 #include "graph.hpp"
+#include "graphutils.hpp"

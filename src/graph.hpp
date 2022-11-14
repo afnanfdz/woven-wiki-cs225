@@ -86,18 +86,3 @@ list<V> &Graph<V>::getAdjacent(V source) const
 {
     return graph_.at(source);
 }
-
-template <class V>
-void Graph<V>::print()
-{
-    for (std::pair<const V, list<V>> &p : graph_)
-    {
-        std::cout << p.first << " -> [ ";
-
-        for (V dest : p.second)
-        {
-            std::cout << dest << " ";
-        }
-        std::cout << "]" << std::endl;
-    }
-}
