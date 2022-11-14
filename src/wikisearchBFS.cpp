@@ -33,7 +33,7 @@ vector<int> WikiSearch::shortestPathBFS(int begin, int goal) const
             }
         }
 
-        // Loop until the while conditions are broken.
+        // Loop until one of the while conditions are violated.
     }
 
     return pathtrace.getShortestPath(); // Returns empty if not found
