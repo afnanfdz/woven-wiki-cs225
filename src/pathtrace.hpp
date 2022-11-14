@@ -38,12 +38,18 @@ bool Pathtrace<T>::goalIsFound() const
 }
 
 template <typename T>
+bool Pathtrace<T>::visited(T key) const
+{
+    return path_.find(key) != path_.end();
+}
+
+template <typename T>
 vector<T> Pathtrace<T>::getShortestPath() const
 {
     vector<T> shortest_path;
 
     // Generate the path if found
-    for (T loc = goal_; loc != T() && isFound(); loc = path_[loc])
+    for (T loc = goal_; loc != T() && goalIsFound(); loc = path_.at(loc))
         /**
          * @note: Insert at front, or push_back and reverse?
          */

@@ -33,6 +33,9 @@ public:
 
     /**
      * Inserts a new vertex / parent vertex pair into the map.
+     *
+     * Average O(1). Worst case O(n) time (unordered_map insertion).
+     *
      * Side effect: also checks whether the path is found after a given insertion
      * @param p The edge to insert
      */
@@ -40,6 +43,9 @@ public:
 
     /**
      * Inserts a new vertex / parent vertex pair into the map.
+     *
+     * Average O(1). Worst case O(n).
+     *
      * Side effect: also checks whether the path is found after a given insertion
      * @param to The source vertex
      * @param from The destination vertex
@@ -47,9 +53,18 @@ public:
     void insert(T from, T to);
 
     /**
+     * Average O(1) time.
+     *
      * @returns Whether the map contains a path from goal to start.
      */
     bool goalIsFound() const;
+
+    /**
+     * Average O(1) time (access of an unordered map).
+     *
+     * @returns Whether the input value has been recorded / visited.
+     */
+    bool visited(T key) const;
 
     /**
      * @returns A vector of the shortest path to the goal.
