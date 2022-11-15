@@ -5,17 +5,7 @@
  * if we expect to be doing something very often.
  */
 
-#include "graph.h"
-
-#include <string>
-#include <iostream>
-
 int main()
 {
-    Graph<unsigned int> g;
-
-    g.importData("../data/gendata/wiki-nodes.txt");
-    g.print();
-
     return 0;
 }
