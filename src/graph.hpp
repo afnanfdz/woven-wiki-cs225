@@ -28,6 +28,11 @@ void Graph<V>::importData(string file_dir)
                 addVertex(from);
             }
 
+            if (!hasVertex(to))
+            {
+                addVertex(to);
+            }
+
             addEdge(from, to);
         }
     }
@@ -81,14 +86,23 @@ void Graph<V>::addVertex(V val)
     }
 }
 
+#include <exception>
+
 template <class V>
 const list<V> &Graph<V>::getAdjacent(V source) const
 {
+    if (!hasVertex(source))
+    {
+        string err = "Graph<V>::getAdjacent error: Tried to access " +
+                     std::to_string(source) + " which isn't in the graph";
+        throw std::invalid_argument(err);
+    }
+
     return graph_.at(source);
 }
 
 template <class V>
-unordered_map<V, list<V>> &Graph<V>::getGraph() const
+const unordered_map<V, list<V>> &Graph<V>::getGraph() const
 {
     return graph_;
 }

@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <exception>
 
 using std::list;
 using std::string;
@@ -17,7 +18,7 @@ template <class V>
 class Graph
 {
 private: // Structs, if any! (None right now)
-public:  // Public methods
+public:  // Protected methods
     /**
      * Default constructor. Does nothing.
      */
@@ -29,6 +30,12 @@ public:  // Public methods
      */
     void importData(string file_dir);
 
+    /**
+     * Prints each node and all its children
+     */
+    void print() const;
+
+protected:
     /**
      * Checks the map whether the key exists;
      * if so, check if its list contains the second input
@@ -64,12 +71,7 @@ public:  // Public methods
     /**
      * @returns a const reference to the unordered map storing vertices and edge
      */
-    unordered_map<V, list<V>> &getGraph() const;
-
-    /**
-     * Prints each node and all its children
-     */
-    void print() const;
+    const unordered_map<V, list<V>> &getGraph() const;
 
 private: // Private methods
     /**
