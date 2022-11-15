@@ -11,23 +11,18 @@ using std::list;
 using std::string;
 using std::vector;
 
-class WikiSearch
+/**
+ * Class inheriting the Graph;
+ * Information about Wikipedia articles, as well
+ * as the project's search functions, are implemented here
+ */
+class WikiSearch : public Graph<int>
 {
 public:
     /**
      * Default constructor. Does nothing.
      */
     WikiSearch();
-
-    /**
-     * Imports edge data (assumed to be ints) to the graph
-     */
-    void importData(string file_dir);
-
-    /**
-     * Prints the graph. Tends to exceed readable limit.
-     */
-    void print() const;
 
     /**
      * Performs a Breadth-First Search
@@ -54,7 +49,4 @@ public:
      * @returns One shortest path from start to goal.
      */
     vector<int> shortestPathIDDFS(int start, int goal) const;
-
-private:
-    Graph<int> graph_;
 };
