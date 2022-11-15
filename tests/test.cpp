@@ -27,6 +27,23 @@ using std::vector;
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
 
+/** DATA & CONSTS */
+
+/**
+ * Files should be in /tests,
+ * and has a SOLUTIONS_ counterpart
+ */
+vector<string> testfiles{
+    "list",
+    "dl_list",
+    "cycles",
+    "threepaths",
+    "twosets"};
+
+///////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
 /** UTILITIES FOR TESTS */
 
 /**
@@ -132,7 +149,10 @@ TEST_CASE("Example Test", "[tag]")
 
 TEST_CASE("Correct Shortest Paths (BFS)", "[correctBFS]")
 {
-    compareSolutionBFS("silly_oneway_list");
+    for (string filename : testfiles)
+    {
+        compareSolutionBFS(filename);
+    }
 }
 
 /** END OF TEST CASES */
