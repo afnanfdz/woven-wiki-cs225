@@ -3,21 +3,25 @@
  */
 
 #include <exception>
+#include <limits>
+
+template <typename T>
+const T Pathtrace<T>::END_OF_PATH = std::numeric_limits<T>::max();
 
 template <typename T>
 Pathtrace<T>::Pathtrace(T start, T goal) : start_(start), goal_(goal)
 {
     found_ = start == goal;
-    path_.insert({start, T()});
+    path_.insert({start, END_OF_PATH});
 }
 
 template <typename T>
 void Pathtrace<T>::insert(pair<T, T> p)
 {
-    // T() is naively used as our "one-past-end" value.
-    // It cannot be a path value given current implementation.
-    if (p.first == T() || p.second == T())
-        throw std::invalid_argument("Path class error: T() was inserted");
+    // END_OF_PATH is our one-past-end value.
+    // It cannot be used in this implementation.
+    if (p.first == END_OF_PATH || p.second == END_OF_PATH)
+        throw std::invalid_argument("Pathtrace error: END_OF_PATH value was inserted");
     // Check if we're about to insert the goal
     if (p.first == goal_)
         found_ = true;
@@ -49,7 +53,7 @@ vector<T> Pathtrace<T>::getShortestPath() const
     vector<T> shortest_path;
 
     // Generate the path if found
-    for (T loc = goal_; loc != T() && goalIsFound(); loc = path_.at(loc))
+    for (T loc = goal_; loc != END_OF_PATH && goalIsFound(); loc = path_.at(loc))
         /**
          * @note: Insert at front, or push_back and reverse?
          */

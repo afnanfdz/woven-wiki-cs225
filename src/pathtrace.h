@@ -72,6 +72,9 @@ public:
      */
     vector<T> getShortestPath() const;
 
+public:
+    const static T END_OF_PATH;
+
 private:
     unordered_map<T, T> path_;
     T start_;
