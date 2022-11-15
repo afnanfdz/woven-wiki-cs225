@@ -1,8 +1,12 @@
 #include "wikisearch.h"
 
 #include <queue>
+#include <iostream>
 
 using std::queue;
+
+// Flip this to allow prints
+bool debug = false;
 
 vector<int> WikiSearch::shortestPathBFS(int begin, int goal) const
 {
@@ -13,6 +17,10 @@ vector<int> WikiSearch::shortestPathBFS(int begin, int goal) const
     queue<int> frontier;
     frontier.push(begin);
 
+    if (debug) /** DEBUG STATEMENT */
+        std::cout << std::endl
+                  << "Pushed " << begin << " to frontier" << std::endl;
+
     // Iterate while there's vertices to visit,
     // and while the goal is not visited
     while (!frontier.empty() && !pathtrace.goalIsFound())
@@ -21,8 +29,11 @@ vector<int> WikiSearch::shortestPathBFS(int begin, int goal) const
         int front = frontier.front();
         frontier.pop();
 
+        if (debug) /** DEBUG STATEMENT */
+            std::cout << "Popped " << front << " from frontier, accessing adjacents.." << std::endl;
+
         // Iterate over all articles it has a link to
-        for (const int &adj : graph_.getAdjacent(front))
+        for (const int &adj : getAdjacent(front))
         {
             // If a linked article has not yet been discovered,
             // mark as visited and add it to the frontier
