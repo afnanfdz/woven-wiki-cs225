@@ -149,9 +149,9 @@ TEST_CASE("Example Test", "[tag]")
 
 TEST_CASE("Correct Shortest Paths (BFS)", "[correctBFS]")
 {
-    for (string filename : testfiles)
+    for (string testfile : testfiles)
     {
-        compareSolutionBFS(filename);
+        compareSolutionBFS(testfile);
     }
 }
 
