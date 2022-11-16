@@ -6,7 +6,7 @@
 using std::queue;
 
 // Flip this to allow prints
-bool debug = false;
+const bool DEBUG = false;
 
 vector<int> WikiSearch::shortestPathBFS(int begin, int goal) const
 {
@@ -17,7 +17,7 @@ vector<int> WikiSearch::shortestPathBFS(int begin, int goal) const
     queue<int> frontier;
     frontier.push(begin);
 
-    if (debug) /** DEBUG STATEMENT */
+    if (DEBUG) /** DEBUG STATEMENT */
         std::cout << std::endl
                   << "Pushed " << begin << " to frontier" << std::endl;
 
@@ -29,7 +29,7 @@ vector<int> WikiSearch::shortestPathBFS(int begin, int goal) const
         int front = frontier.front();
         frontier.pop();
 
-        if (debug) /** DEBUG STATEMENT */
+        if (DEBUG) /** DEBUG STATEMENT */
             std::cout << "Popped " << front << " from frontier, accessing adjacents.." << std::endl;
 
         // Iterate over all articles it has a link to
