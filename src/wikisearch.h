@@ -6,9 +6,11 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <unordered_map>
 
 using std::list;
 using std::string;
+using std::unordered_map;
 using std::vector;
 
 /**
@@ -18,12 +20,24 @@ using std::vector;
  */
 class WikiSearch : public Graph<int>
 {
-public:
+public: // Utilities
     /**
      * Default constructor. Does nothing as of now.
      */
     WikiSearch();
 
+    /**
+     * Imports the data for names of articles.
+     */
+    void importNames(string file_dir);
+
+    /**
+     * @param path A shortest path vector of ints from one of the search algorithms.
+     * @returns The shortest path of articles by name.
+     */
+    vector<string> pathAsNames(const vector<int> &path) const;
+
+public: // Project Algorithms
     /**
      * Performs a Breadth-First Search
      * to find the shortest path from start to goal.
@@ -49,4 +63,7 @@ public:
      * @returns One shortest path from start to goal.
      */
     vector<int> shortestPathIDDFS(int start, int goal) const;
+
+private:
+    unordered_map<int, string> names_;
 };
