@@ -20,7 +20,7 @@ class WikiSearch : public Graph<int>
 {
 public:
     /**
-     * Default constructor. Does nothing.
+     * Default constructor. Does nothing as of now.
      */
     WikiSearch();
 

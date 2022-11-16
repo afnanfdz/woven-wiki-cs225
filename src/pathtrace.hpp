@@ -19,7 +19,7 @@ template <typename T>
 void Pathtrace<T>::insert(pair<T, T> p)
 {
     // END_OF_PATH is our one-past-end value.
-    // It cannot be used in this implementation.
+    // It cannot be used as a vertex index in this implementation.
     if (p.first == END_OF_PATH || p.second == END_OF_PATH)
         throw std::invalid_argument("Pathtrace error: END_OF_PATH value was inserted");
     // Check if we're about to insert the goal
