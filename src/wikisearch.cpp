@@ -28,6 +28,7 @@ void WikiSearch::importNames(string file_dir)
             name = line.substr(line.find(' ') + 1, line.size());
 
             names_.insert({index, name});
+            ints_.insert({name, index});
         }
     }
 }
@@ -42,4 +43,9 @@ vector<string> WikiSearch::pathAsNames(const vector<int> &path) const
     }
 
     return name_path;
+}
+
+int WikiSearch::intFromName(string name) const
+{
+    return ints_.at(name);
 }

@@ -37,6 +37,12 @@ public: // Utilities
      */
     vector<string> pathAsNames(const vector<int> &path) const;
 
+    /**
+     * @param name Exact name to look up
+     * @returns The integer index of this name
+     */
+    int intFromName(string name) const;
+
 public: // Project Algorithms
     /**
      * Performs a Breadth-First Search
@@ -66,4 +72,5 @@ public: // Project Algorithms
 
 private:
     unordered_map<int, string> names_;
+    unordered_map<string, int> ints_;
 };
