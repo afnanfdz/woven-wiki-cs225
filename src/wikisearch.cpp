@@ -69,6 +69,5 @@ vector<string> WikiSearch::lookupName(string name) const
             poss_name.push_back(it->second);
         }
     }
-
     return poss_name;
 }
