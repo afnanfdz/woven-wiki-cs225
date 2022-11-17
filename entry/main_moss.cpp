@@ -45,11 +45,13 @@ int main()
 
         while(srch){
             std::cout << "Enter the beginning article title, or type at least 3 characters to search: ";
-            std::cin >> begin;
+            //std::cin >> begin;
+            std::getline(std::cin >> std::ws, begin);
 
             while(begin.size() < 3){
                 std::cout << std::endl << "Query is too short, please enter another: " << std::endl;
-                std::cin >> begin;
+                //std::cin >> begin;
+                std::getline(std::cin >> std::ws, begin);
             }
 
             std::cout << std::endl << "Searching with the phrase '" << begin << "'" << std::endl;
@@ -84,7 +86,7 @@ int main()
                 bool optChosen = true;
                 int option;
                 while(optChosen){
-                    std::cout << "Type the option you would like: ";
+                    std::cout << "Type the number of the option you would like: ";
                     std::cin >> option;
                     if((option < 1) || (option > i)){
                         std::cout << std::endl << "Invalid input, Try again." << std::endl;
@@ -106,17 +108,20 @@ int main()
         int beginOffset = 0;
 
         while(srch){
-            std::cout << "Enter the ending article title, or type at least 3 characters to search: " << std::endl;
-            std::cin >> goal;
+            std::cout << "Enter the ending article title, or type at least 3 characters to search: ";
+            //std::cin >> goal;
+            std::getline(std::cin >> std::ws, goal);
 
             while(goal == chosenBegin){
-                std::cout << "You may not use the same article, please enter another: ";
-                std::cin >> goal;
+                std::cout << std::endl << "You may not use the same article, please enter another: ";
+                //std::cin >> goal;
+                std::getline(std::cin >> std::ws, goal);
             }
 
             while(begin.size() < 3){
                 std::cout << std::endl << "Query is too short, please enter another: " << std::endl;
-                std::cin >> goal;
+                //std::cin >> goal;
+                std::getline(std::cin >> std::ws, goal);
             }
             std::cout << std::endl << "Searching with the phrase '" << goal << "'" << std::endl;
 
@@ -154,7 +159,7 @@ int main()
                 bool optChosen = true;
                 int option;
                 while(optChosen){
-                    std::cout << "Type the option you would like: ";
+                    std::cout << "Type the number of the option you would like: ";
                     std::cin >> option;
                     if((option < 1) || (option > i)){
                         std::cout << std::endl << "Invalid input, Try again." << std::endl;
