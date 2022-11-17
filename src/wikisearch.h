@@ -43,6 +43,12 @@ public: // Utilities
      */
     int intFromName(string name) const;
 
+    /**
+     * @param path Fragment of name to look up
+     * @returns A vector of possible article names
+     */
+    vector<string> lookupName(string name) const;
+
 public: // Project Algorithms
     /**
      * Performs a Breadth-First Search

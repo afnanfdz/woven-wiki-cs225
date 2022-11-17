@@ -6,6 +6,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 using std::ifstream;
 
@@ -48,4 +49,26 @@ vector<string> WikiSearch::pathAsNames(const vector<int> &path) const
 int WikiSearch::intFromName(string name) const
 {
     return ints_.at(name);
+}
+
+vector<string> WikiSearch::lookupName(string name) const
+{
+    if(name.size() < 4){
+        return vector<string>();
+    }
+    vector<string> poss_name;
+    unordered_map<int, string>::iterator it;
+    string upperName = name;
+    string tempName;
+    transform(upperName.begin(), upperName.end(), upperName.begin(), toupper);
+
+    for(it == names_.begin(); it != names_.end(); it++){
+        tempName = it->second;
+        transform(tempName.begin(), tempName.end(), tempName.begin(), toupper);
+        if((tempName.find(upperName)) != -1){
+            poss_name.push_back(it->second);
+        }
+    }
+
+    return poss_name;
 }
