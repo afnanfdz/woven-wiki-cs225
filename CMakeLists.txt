@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 # Assignment Information (these are the *only* things you need to change here between assignments)
 set(assignment_name "woven_wiki_project") # Name of the assignment
 set(assignment_version 1.2022.12.0) # Version, where minor=semester_year, patch=semester_end_month, tweak=revision
-set(assignment_entrypoints "main" "generate_data") # Entrypoints to run the program
+set(assignment_entrypoints "main_vuc" "main_moss" "main_awelotta" "main_ben" "generate_data" "wikisearch_large" "wikisearch_small") # Entrypoints to run the program
 set(assignment_clean_rm "") # Generated files that should be removed with "make clean"
 set(assignment_container "fa22") # Container we are targetting
 
