@@ -57,15 +57,14 @@ vector<string> WikiSearch::lookupName(string name) const
         return vector<string>();
     }
     vector<string> poss_name;
-    unordered_map<int, string>::iterator it;
     string upperName = name;
     string tempName;
     transform(upperName.begin(), upperName.end(), upperName.begin(), toupper);
 
-    for(it == names_.begin(); it != names_.end(); it++){
+    for(std::unordered_map<int, std::string>::const_iterator it = names_.begin(); it != names_.end(); it++){
         tempName = it->second;
         transform(tempName.begin(), tempName.end(), tempName.begin(), toupper);
-        if((tempName.find(upperName)) != -1){
+        if(int(tempName.find(upperName)) != -1){
             poss_name.push_back(it->second);
         }
     }

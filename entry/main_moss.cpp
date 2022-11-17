@@ -40,6 +40,7 @@ int main()
                 std::cout << "Query is too short, please enter another: " << std::endl;
                 std::cin >> begin;
             }
+            
             std::cout << std::endl << "Searching with the phrase '" << begin << "'" << std::endl;
 
             std::vector<string> opts = ws.lookupName(begin);
