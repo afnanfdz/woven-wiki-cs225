@@ -13,10 +13,20 @@ int main()
 {
     WikiSearch ws;
 
+    /*
+    // small version
     std::cout << "Importing data..." << std::endl;
     ws.importData("../data/wiki-nodes.txt");
     std::cout << "Done. Importing names..." << std::endl;
     ws.importNames("../data/wiki-names.txt");
+    */
+
+    // regular version
+    std::cout << "Importing data..." << std::endl;
+    ws.importData("../data/wiki-topcats.txt");
+    std::cout << "Done. Importing names..." << std::endl;
+    ws.importNames("../data/wiki-topcats-page-names.txt");
+
     std::cout << "... Done" << std::endl << std::endl;
 
     bool tryAgain = true;
@@ -34,11 +44,11 @@ int main()
         bool srch = true;
 
         while(srch){
-            std::cout << "Enter the beginning article title, or type at least 3 characters to search: " << std::endl;
+            std::cout << "Enter the beginning article title, or type at least 3 characters to search: ";
             std::cin >> begin;
 
             while(begin.size() < 3){
-                std::cout << "Query is too short, please enter another: " << std::endl;
+                std::cout << std::endl << "Query is too short, please enter another: " << std::endl;
                 std::cin >> begin;
             }
 
@@ -100,12 +110,12 @@ int main()
             std::cin >> goal;
 
             while(goal == chosenBegin){
-                std::cout << "You may not use the same article, please enter another: " << std::endl;
+                std::cout << "You may not use the same article, please enter another: ";
                 std::cin >> goal;
             }
 
             while(begin.size() < 3){
-                std::cout << "Query is too short, please enter another: " << std::endl;
+                std::cout << std::endl << "Query is too short, please enter another: " << std::endl;
                 std::cin >> goal;
             }
             std::cout << std::endl << "Searching with the phrase '" << goal << "'" << std::endl;
