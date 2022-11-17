@@ -53,7 +53,7 @@ int WikiSearch::intFromName(string name) const
 
 vector<string> WikiSearch::lookupName(string name) const
 {
-    if(name.size() < 4){
+    if(name.size() < 3){
         return vector<string>();
     }
     vector<string> poss_name;

@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <algorithm>
 
 int main()
 {
@@ -17,15 +19,150 @@ int main()
     ws.importNames("../data/wiki-topcats-page-names.txt");
     std::cout << "... Done" << std::endl << std::endl;
 
-    while (true)
+    bool tryAgain = true;
+    string chosenBegin;
+    int beginINT;
+    string chosenEnd;
+    int endINT;
+    string begin;
+    string goal;
+    string yesno;
+
+    while (tryAgain)
     {
-        int begin;
-        int goal;
+        bool srch = true;
 
-        std::cout << "Enter a pair of vertex numbers: " << std::endl;
-        std::cin >> begin >> goal;
+        while(srch){
+            std::cout << "Enter the beginning article title, or type at least 3 characters to search: " << std::endl;
+            std::cin >> begin;
 
-        vector<string> path = ws.pathAsNames(ws.shortestPathBFS(begin, goal));
+            while(begin.size() < 3){
+                std::cout << "Query is too short, please enter another: " << std::endl;
+                std::cin >> begin;
+            }
+            std::cout << std::endl << "Searching with the phrase '" << begin << "'" << std::endl;
+
+            std::vector<string> opts = ws.lookupName(begin);
+
+            if(opts.size() > 0){
+                std::cout << "List of potential options: " << std::endl;
+                int i = 1;
+                for(const string & op : opts){
+                    std::cout << i << ". " << op << std::endl;
+                    if((i % 25) == 0){
+                        bool escloop = true;
+                        bool more = false;
+                        while(escloop){
+                            std::cout << "More options available, print more options (Yes / No): ";
+                            std::cin >> yesno;
+                            transform(yesno.begin(), yesno.end(), yesno.begin(), toupper);
+                            if(yesno != "YES" && yesno != "NO"){
+                                std::cout << std::endl << "Invalid input, Try again." << std::endl;
+                                continue;
+                            } else {
+                                std::cout << std::endl;
+                                escloop = false;
+                            }
+                        }
+                        if(yesno == "NO"){
+                            break;
+                        }
+                    }
+                    i++;
+                }
+                bool optChosen = true;
+                int option;
+                while(optChosen){
+                    std::cout << "Type the option you would like: ";
+                    std::cin >> option;
+                    if((option < 1) || (option > i)){
+                        std::cout << std::endl << "Invalid input, Try again." << std::endl;
+                        continue;
+                    } else {
+                        std::cout << std::endl;
+                        optChosen = false;
+                        srch = false;
+                        chosenBegin = opts[option];
+                        beginINT = ws.intFromName(chosenBegin);
+                    }
+                }
+            } else {
+                std::cout << "No search results found, try again." << std::endl << std::endl;
+            }
+        }
+
+        srch = true;
+        int beginOffset = 0;
+
+        while(srch){
+            std::cout << "Enter the ending article title, or type at least 3 characters to search: " << std::endl;
+            std::cin >> goal;
+
+            while(goal == chosenBegin){
+                std::cout << "You may not use the same article, please enter another: " << std::endl;
+                std::cin >> goal;
+            }
+
+            while(begin.size() < 3){
+                std::cout << "Query is too short, please enter another: " << std::endl;
+                std::cin >> goal;
+            }
+            std::cout << std::endl << "Searching with the phrase '" << goal << "'" << std::endl;
+
+            std::vector<string> opts = ws.lookupName(goal);
+
+            if(opts.size() > 0){
+                std::cout << "List of potential options: " << std::endl;
+                int i = 1;
+                for(const string & op : opts){
+                    if(op == chosenBegin){
+                        beginOffset++;
+                        continue;
+                    }
+                    std::cout << i << ". " << op << std::endl;
+                    if((i % 25) == 0){
+                        bool escloop = true;
+                        bool more = false;
+                        while(escloop){
+                            std::cout << "More options available, print more options (Yes / No): ";
+                            std::cin >> yesno;
+                            transform(yesno.begin(), yesno.end(), yesno.begin(), toupper);
+                            if(yesno != "YES" && yesno != "NO"){
+                                std::cout << std::endl << "Invalid input, Try again." << std::endl;
+                                continue;
+                            } else {
+                                std::cout << std::endl;
+                                escloop = false;
+                            }
+                        }
+                        if(yesno == "NO"){
+                            break;
+                        }
+                    }
+                    i++;
+                }
+                bool optChosen = true;
+                int option;
+                while(optChosen){
+                    std::cout << "Type the option you would like: ";
+                    std::cin >> option;
+                    if((option < 1) || (option > i)){
+                        std::cout << std::endl << "Invalid input, Try again." << std::endl;
+                        continue;
+                    } else {
+                        std::cout << std::endl;
+                        optChosen = false;
+                        srch = false;
+                        chosenEnd = opts[option + beginOffset];
+                        endINT = ws.intFromName(chosenEnd);
+                    }
+                }
+            } else {
+                std::cout << "No search results found, try again." << std::endl << std::endl;
+            }
+        }
+
+        vector<string> path = ws.pathAsNames(ws.shortestPathBFS(beginINT, endINT));
 
         std::cout << "Shortest path is of length " << path.size() << ":" << std::endl;
         for (size_t i = 0; i < path.size(); i++)
