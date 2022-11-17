@@ -1,8 +1,5 @@
 /**
- * @file main.cpp
- *
- * Expected to be used for quick testing. A new entryfile should be made
- * if we expect to be doing something very often.
+ * @file wikisearch_small.cpp
  */
 
 #include "wikisearch.h"
@@ -16,9 +13,9 @@ int main()
     WikiSearch ws;
 
     std::cout << "Importing data..." << std::endl;
-    ws.importData("../data/wiki-topcats.txt");
+    ws.importData("../data/wiki-nodes.txt");
     std::cout << "Done. Importing names..." << std::endl;
-    ws.importNames("../data/wiki-topcats-page-names.txt");
+    ws.importNames("../data/wiki-names.txt");
     std::cout << "... Done" << std::endl
               << std::endl;
 
