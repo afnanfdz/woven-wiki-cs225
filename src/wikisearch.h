@@ -75,21 +75,30 @@ public: // Project Algorithms
      * Performs an Iterative Deepening Depth-First Search
      * to find the shortest path from start to goal.
      *
+     * @note Naively uses the DisjointSet Size of Start as the max depth,
+     * which is somewhat useless in the full dataset where it's one set,
+     * so the maximum depth is just the number of nodes
+     *
      * Worst case time: O(V).
      * Worst case memory: O(max(depth)).
      *
      * @param start The starting article index.
      * @param goal The destination article index.
-     * @returns One shortest path from start to goal.
+     * @returns One shortest path from start to goal, or empty vector if not found.
      */
     vector<int> shortestPathIDDFS(int start, int goal) const;
 
-private:
-    vector<int> limitedDFS(int start, int goal, int limit) const;
+private: // Private functions
+    /**
+     * Helper to shortestPathIDDFS().
+     * @param source The source article index in the recursion.
+     * @param goal The destination article index to find.
+     * @returns Empty if goal not found; vector of REVERSED path otherwise
+     */
+    vector<int> limitedDFS(int source, int goal, int limit) const;
 
 private:
     unordered_map<int, string> names_;
     unordered_map<string, int> ints_;
     DisjointSets dsets_;
-    const static int END_OF_PATH; // Used in IDDFS
 };

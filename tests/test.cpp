@@ -134,6 +134,49 @@ void compareSolutionBFS(string file_name)
     }
 }
 
+/**
+ * @author Vuc
+ *
+ * Takes a map of solutions and tests it against our implementations
+ * @param file_name Name of the .txt data file.
+ * Assumed to have a SOLUTIONS_ counterpart.
+ * Assumed to be in the ./tests folder.
+ */
+void compareSolutionIDDFS(string file_name)
+{
+    const unordered_map<string, string> &sols = readSolutions("../tests/SOLUTIONS_" + file_name + ".txt");
+    WikiSearch ws;
+    ws.importData("../tests/" + file_name + ".txt");
+
+    for (const pair<const string, string> &p : sols)
+    {
+        stringstream ss_inputs(p.first);
+        int start;
+        int goal;
+        ss_inputs >> start >> goal;
+
+        stringstream ss_path(p.second);
+        vector<int> solution;
+        if (p.second != "EMPTY")
+        {
+            int loc;
+            while (ss_path >> loc)
+                solution.push_back(loc);
+        }
+
+        // std::cout << "Inputs: " << start << ", " << goal << std::endl
+        //           << "Solution: [ ";
+
+        // for (int i : solution)
+        //     std::cout << i << ", ";
+        // std::cout << "]" << std::endl
+        //           << std::endl;
+
+        vector<int> implementation_solution = ws.shortestPathIDDFS(start, goal);
+        comparePaths(solution, implementation_solution);
+    }
+}
+
 /** END OF TEST UTILITIES */
 
 //////////////////////////////////////////////////
@@ -147,11 +190,19 @@ TEST_CASE("Example Test", "[tag]")
     REQUIRE(true);
 }
 
-TEST_CASE("Correct Shortest Paths (BFS)", "[correctBFS]")
+TEST_CASE("Correct Shortest Paths (BFS)", "[BFS]")
 {
     for (string testfile : testfiles)
     {
         compareSolutionBFS(testfile);
+    }
+}
+
+TEST_CASE("Correct Shortest Paths (IDDFS)", "[IDDFS]")
+{
+    for (string testfile : testfiles)
+    {
+        compareSolutionIDDFS(testfile);
     }
 }
 

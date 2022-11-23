@@ -77,7 +77,7 @@ public:
     /**
      * @returns a vector of the nodes in the graph
      */
-    vector<V> &getNodes() const;
+    vector<V> getNodes() const;
 
 private: // Private methods
     /**

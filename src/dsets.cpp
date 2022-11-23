@@ -4,29 +4,20 @@
 #include <algorithm>
 #include <iostream>
 
-void DisjointSets::addelements(int num)
-{
-    num_sets += num;
-    for (int i = 0; i < num; i++)
-    {
-        elems_.insert(i, -1);
-    }
-}
-
 void DisjointSets::addelements(std::vector<int> v)
 {
     num_sets += v.size();
-    for (const int i : v)
+    for (const int n : v)
     {
-        elems_.insert(i, -1);
+        elems_.insert({n, -1});
     }
 }
 
 int DisjointSets::find(int elem) const
 {
-    if (std::size_t(elem) >= elems_.size())
+    if (elems_.find(elem) == elems_.end())
     {
-        throw std::invalid_argument("Elem larger than elem size");
+        throw std::invalid_argument("Elem doesn't exist");
     }
 
     int to_return = elem;
@@ -66,31 +57,21 @@ int DisjointSets::size(int elem) const
     return std::abs(elems_.at(find(elem)));
 }
 
-// void DisjointSets::print() const
-// {
-//     for (size_t i = 0; i < elems_.size(); i++)
-//     {
-//         if (i >= 0 && i < 10)
-//         {
-//             std::cout << " ";
-//         }
-
-//         std::cout << i << " ";
-//     }
-//     std::cout << std::endl;
-//     for (int i : elems_)
-//     {
-//         if (i >= 0 && i < 10)
-//         {
-//             std::cout << " ";
-//         }
-//         std::cout << i << " ";
-//     }
-//     std::cout << std::endl
-//               << std::endl;
-// }
+void DisjointSets::print() const
+{
+    for (const auto &p : elems_)
+    {
+        std::cout << p.first << " : " << p.second << std::endl;
+    }
+    std::cout << std::endl;
+}
 
 bool DisjointSets::isunited() const
 {
     return num_sets == 1;
+}
+
+int DisjointSets::getNumSets() const
+{
+    return num_sets;
 }

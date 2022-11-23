@@ -88,7 +88,7 @@ void Graph<V>::addVertex(V val)
 }
 
 template <class V>
-vector<V> &Graph<V>::getNodes() const
+vector<V> Graph<V>::getNodes() const
 {
     vector<V> nodes_;
 
