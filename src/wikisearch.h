@@ -2,6 +2,7 @@
 
 #include "graph.h"
 #include "pathtrace.h"
+#include "dsets.h"
 
 #include <string>
 #include <vector>
@@ -21,10 +22,15 @@ using std::vector;
 class WikiSearch : public Graph<int>
 {
 public: // Utilities
+    using Graph<int>::getAdjacent;
+    using Graph<int>::getGraph;
+
     /**
      * Default constructor. Does nothing as of now.
      */
     WikiSearch();
+
+    void importData(string file_dir);
 
     /**
      * Imports the data for names of articles.
@@ -48,6 +54,8 @@ public: // Utilities
      * @returns A vector of possible article names
      */
     vector<string> lookupName(string name) const;
+
+    const DisjointSets &getDisjointSet() const;
 
 public: // Project Algorithms
     /**
@@ -82,5 +90,6 @@ private:
 private:
     unordered_map<int, string> names_;
     unordered_map<string, int> ints_;
+    DisjointSets dsets_;
     const static int END_OF_PATH; // Used in IDDFS
 };

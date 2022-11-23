@@ -6,11 +6,27 @@
 
 #include <fstream>
 #include <iostream>
+#include <utility>
 #include <algorithm>
 
 using std::ifstream;
 
 WikiSearch::WikiSearch() : Graph<int>() {}
+
+void WikiSearch::importData(string file_dir)
+{
+    Graph<int>::importData(file_dir);
+
+    // Disjoint set information
+    dsets_.addelements(getNodes());
+    for (const std::pair<const int, std::list<int>> &p : getGraph())
+    {
+        for (const int &neighbor : p.second)
+        {
+            dsets_.setunion(p.first, neighbor);
+        }
+    }
+}
 
 void WikiSearch::importNames(string file_dir)
 {
@@ -51,9 +67,15 @@ int WikiSearch::intFromName(string name) const
     return ints_.at(name);
 }
 
+const DisjointSets &WikiSearch::getDisjointSet() const
+{
+    return dsets_;
+}
+
 vector<string> WikiSearch::lookupName(string name) const
 {
-    if(name.size() < 4){
+    if (name.size() < 4)
+    {
         return vector<string>();
     }
     vector<string> poss_name;
@@ -62,10 +84,12 @@ vector<string> WikiSearch::lookupName(string name) const
     string tempName;
     transform(upperName.begin(), upperName.end(), upperName.begin(), toupper);
 
-    for(it == names_.begin(); it != names_.end(); it++){
+    for (it == names_.begin(); it != names_.end(); it++)
+    {
         tempName = it->second;
         transform(tempName.begin(), tempName.end(), tempName.begin(), toupper);
-        if((tempName.find(upperName)) != -1){
+        if ((tempName.find(upperName)) != -1)
+        {
             poss_name.push_back(it->second);
         }
     }
