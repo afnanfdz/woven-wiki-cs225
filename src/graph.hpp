@@ -1,5 +1,6 @@
 #include <fstream>
 #include <utility>
+#include <exception>
 
 using std::ifstream;
 
@@ -86,7 +87,18 @@ void Graph<V>::addVertex(V val)
     }
 }
 
-#include <exception>
+template <class V>
+vector<V> &Graph<V>::getNodes() const
+{
+    vector<V> nodes_;
+
+    for (const std::pair<V, list<V>> &p : graph_)
+    {
+        nodes_.push_back(p.first);
+    }
+
+    return nodes_;
+}
 
 template <class V>
 const list<V> &Graph<V>::getAdjacent(V source) const

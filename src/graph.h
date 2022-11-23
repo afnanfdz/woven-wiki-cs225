@@ -5,10 +5,12 @@
 #include <string>
 #include <iostream>
 #include <exception>
+#include <vector>
 
 using std::list;
 using std::string;
 using std::unordered_map;
+using std::vector;
 
 /**
  * Graph class. Inspired by the CS225 lib but meant to be more lightweight.
@@ -18,7 +20,7 @@ template <class V>
 class Graph
 {
 private: // Structs, if any! (None right now)
-public:  // Protected methods
+public:
     /**
      * Default constructor. Does nothing.
      */
@@ -35,7 +37,6 @@ public:  // Protected methods
      */
     void print() const;
 
-protected:
     /**
      * Checks the map whether the key exists;
      * if so, check if its list contains the second input
@@ -72,6 +73,11 @@ protected:
      * @returns a const reference to the unordered map storing vertices and edge
      */
     const unordered_map<V, list<V>> &getGraph() const;
+
+    /**
+     * @returns a vector of the nodes in the graph
+     */
+    vector<V> &getNodes() const;
 
 private: // Private methods
     /**
