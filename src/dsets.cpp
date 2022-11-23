@@ -1,4 +1,4 @@
-#include "dset.h"
+#include "dsets.h"
 
 #include <exception>
 #include <algorithm>
@@ -9,7 +9,16 @@ void DisjointSets::addelements(int num)
     num_sets += num;
     for (int i = 0; i < num; i++)
     {
-        elems_.push_back(-1);
+        elems_.insert(i, -1);
+    }
+}
+
+void DisjointSets::addelements(std::vector<int> v)
+{
+    num_sets += v.size();
+    for (const int i : v)
+    {
+        elems_.insert(i, -1);
     }
 }
 
@@ -17,7 +26,7 @@ int DisjointSets::find(int elem) const
 {
     if (std::size_t(elem) >= elems_.size())
     {
-        std::__throw_invalid_argument("Elem larger than elem size");
+        throw std::invalid_argument("Elem larger than elem size");
     }
 
     int to_return = elem;
@@ -57,29 +66,29 @@ int DisjointSets::size(int elem) const
     return std::abs(elems_.at(find(elem)));
 }
 
-void DisjointSets::print() const
-{
-    for (size_t i = 0; i < elems_.size(); i++)
-    {
-        if (i >= 0 && i < 10)
-        {
-            std::cout << " ";
-        }
+// void DisjointSets::print() const
+// {
+//     for (size_t i = 0; i < elems_.size(); i++)
+//     {
+//         if (i >= 0 && i < 10)
+//         {
+//             std::cout << " ";
+//         }
 
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
-    for (int i : elems_)
-    {
-        if (i >= 0 && i < 10)
-        {
-            std::cout << " ";
-        }
-        std::cout << i << " ";
-    }
-    std::cout << std::endl
-              << std::endl;
-}
+//         std::cout << i << " ";
+//     }
+//     std::cout << std::endl;
+//     for (int i : elems_)
+//     {
+//         if (i >= 0 && i < 10)
+//         {
+//             std::cout << " ";
+//         }
+//         std::cout << i << " ";
+//     }
+//     std::cout << std::endl
+//               << std::endl;
+// }
 
 bool DisjointSets::isunited() const
 {
