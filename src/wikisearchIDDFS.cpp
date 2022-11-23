@@ -14,6 +14,7 @@ vector<int> WikiSearch::limitedDFS(int start, int goal, int limit) const
 
 vector<int> WikiSearch::shortestPathIDDFS(int begin, int goal) const
 {
+    int max_depth = getDisjointSet().size(begin);
 
     return vector<int>(); // Returns empty if not found
 }
