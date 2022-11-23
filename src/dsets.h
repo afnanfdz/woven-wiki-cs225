@@ -7,7 +7,6 @@
 class DisjointSets
 {
 public:
-    void addelements(int);
     void addelements(std::vector<int> v);
     int find(int) const;
     void setunion(int, int);
@@ -15,6 +14,7 @@ public:
     void print() const;
 
     bool isunited() const;
+    int getNumSets() const;
 
 private:
     int num_sets = 0;
