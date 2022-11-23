@@ -77,6 +77,10 @@ public: // Project Algorithms
     vector<int> shortestPathIDDFS(int start, int goal) const;
 
 private:
+    vector<int> limitedDFS(int start, int goal, int limit) const;
+
+private:
     unordered_map<int, string> names_;
     unordered_map<string, int> ints_;
+    const static int END_OF_PATH; // Used in IDDFS
 };
