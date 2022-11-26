@@ -30,37 +30,63 @@ int main()
     // string for testing yes and no options
     string yesno;
 
-    /*
-    // small version
-    // time the import
-    std::cout << "Importing limited data..." << std::endl;
-    auto startIMDAT = std::chrono::high_resolution_clock::now();
-    ws.importData("../data/wiki-nodes.txt");
-    auto stopIMDAT = std::chrono::high_resolution_clock::now();
+    // find out if the user wants to use full or limited data set
+    escloop = true;
+    while(escloop){
+        // ask full 
+        std::cout << "Would you like to use the full dataset? (Yes / No): ";
+        std::cin >> yesno;
 
-    // calculate time
-    auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
-    double IMDATseconds = ((durationIMDAT.count()) % 6000000) / 100000;
-    int IMDATminutes = (durationIMDAT.count()) / 6000000;
-    std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
-    std::cout << "Importing names..." << std::endl;
-    ws.importNames("../data/wiki-names.txt");
-    */
+        // modify answer to upper case, and change y into yes and n into no for better usability
+        transform(yesno.begin(), yesno.end(), yesno.begin(), toupper);
+        if(yesno == "Y"){
+            yesno = "YES";
+        } else if(yesno == "N"){
+            yesno = "NO";
+        }
 
-    // regular version
-    // time the import
-    std::cout << "Importing full data... (this may take some time)." << std::endl;
-    auto startIMDAT = std::chrono::high_resolution_clock::now();
-    ws.importData("../data/wiki-topcats.txt");
-    auto stopIMDAT = std::chrono::high_resolution_clock::now();
+        // test case
+        if(yesno != "YES" && yesno != "NO"){
+            // if its not yes or no, its an invalid input
+            std::cout << std::endl << "Invalid input, Try again." << std::endl;
+        } else {
+            // if its yes or no, its an valid input, act accordingly
+            std::cout << std::endl;
+            escloop = false;
+        }
+    }
 
-    // calculate time
-    auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
-    double IMDATseconds = double((durationIMDAT.count()) % 60000000) / 1000000;
-    int IMDATminutes = (durationIMDAT.count()) / 60000000;
-    std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
-    std::cout << "Importing names..." << std::endl;
-    ws.importNames("../data/wiki-topcats-page-names.txt");
+    if(yesno == "YES"){
+        // regular version
+        // time the import
+        std::cout << "Importing full data... (this may take some time)." << std::endl;
+        auto startIMDAT = std::chrono::high_resolution_clock::now();
+        ws.importData("../data/wiki-topcats.txt");
+        auto stopIMDAT = std::chrono::high_resolution_clock::now();
+
+        // calculate time
+        auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
+        double IMDATseconds = double((durationIMDAT.count()) % 60000000) / 1000000;
+        int IMDATminutes = (durationIMDAT.count()) / 60000000;
+        std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
+        std::cout << "Importing names..." << std::endl;
+        ws.importNames("../data/wiki-topcats-page-names.txt");
+    } else {
+        // small version
+        // time the import
+        std::cout << "Importing limited data..." << std::endl;
+        auto startIMDAT = std::chrono::high_resolution_clock::now();
+        ws.importData("../data/wiki-nodes.txt");
+        auto stopIMDAT = std::chrono::high_resolution_clock::now();
+
+        // calculate time
+        auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
+        double IMDATseconds = double((durationIMDAT.count()) % 60000000) / 1000000;
+        int IMDATminutes = (durationIMDAT.count()) / 60000000;
+        std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
+        std::cout << "Importing names..." << std::endl;
+        ws.importNames("../data/wiki-names.txt");
+    }
 
     std::cout << "... Done" << std::endl << std::endl;
 
