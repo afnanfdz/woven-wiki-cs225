@@ -11,169 +11,53 @@
 
 int main()
 {
+    // the wiki search class
     WikiSearch ws;
+
+    // test case on if we want to keep on searching
+    bool tryAgain = true;
+
+    // test case for ecaping some loops
+    bool escloop;
+
+    // beginning article title index
+    int beginINT;
+
+    // ending article title index
+    int endINT;
+
+    // string for testing yes and no options
+    string yesno;
 
     /*
     // small version
-    std::cout << "Importing data..." << std::endl;
+    std::cout << "Importing limited data..." << std::endl;
     ws.importData("../data/wiki-nodes.txt");
     std::cout << "Done. Importing names..." << std::endl;
     ws.importNames("../data/wiki-names.txt");
     */
 
     // regular version
-    std::cout << "Importing data..." << std::endl;
+    std::cout << "Importing full data... (this may take some time)" << std::endl;
     ws.importData("../data/wiki-topcats.txt");
     std::cout << "Done. Importing names..." << std::endl;
     ws.importNames("../data/wiki-topcats-page-names.txt");
 
     std::cout << "... Done" << std::endl << std::endl;
 
-    bool tryAgain = true;
-    bool escloop;
-    string chosenBegin;
-    int beginINT;
-    string chosenEnd;
-    int endINT;
-    string begin;
-    string goal;
-    string yesno;
-
+    // test case for if we want to do more searches
     while (tryAgain)
     {
-        bool srch = true;
+        // search the beginning title, use a placeholder article title that does not exist, will not matter
+        beginINT = ws.findName(true, "qqqqqqqqqqqq");
 
-        while(srch){
-            std::cout << "Enter the beginning article title, or type at least 3 characters to search: ";
-            std::getline(std::cin >> std::ws, begin);
+        // find the endingle title. use the title from the first one
+        endINT = ws.findName(false, ws.nameFromInt(beginINT));
 
-            while(begin.size() < 3){
-                std::cout << std::endl << "Query is too short, please enter another: " << std::endl;
-                std::getline(std::cin >> std::ws, begin);
-            }
-
-            std::cout << std::endl << "Searching with the phrase '" << begin << "'" << std::endl;
-
-            std::vector<string> opts = ws.lookupName(begin);
-
-            if(opts.size() > 0){
-                std::cout << "List of potential options: " << std::endl;
-                int i = 1;
-                for(const string & op : opts){
-                    std::cout << i << ". " << op << std::endl;
-                    if((i % 15) == 0){
-                        escloop = true;
-                        while(escloop){
-                            std::cout << "More options available, print more options (Yes / No): ";
-                            std::cin >> yesno;
-                            transform(yesno.begin(), yesno.end(), yesno.begin(), toupper);
-                            if(yesno != "YES" && yesno != "NO"){
-                                std::cout << std::endl << "Invalid input, Try again." << std::endl;
-                                continue;
-                            } else {
-                                std::cout << std::endl;
-                                escloop = false;
-                            }
-                        }
-                        if(yesno == "NO"){
-                            break;
-                        }
-                    }
-                    i++;
-                }
-                bool optChosen = true;
-                int option;
-                while(optChosen){
-                    std::cout << "Type the number of the option you would like: ";
-                    std::cin >> option;
-                    if((option < 1) || (option > i)){
-                        std::cout << std::endl << "Invalid input, Try again." << std::endl;
-                        continue;
-                    } else {
-                        std::cout << std::endl;
-                        optChosen = false;
-                        srch = false;
-                        chosenBegin = opts[option - 1];
-                        beginINT = ws.intFromName(chosenBegin);
-                    }
-                }
-            } else {
-                std::cout << "No search results found, try again." << std::endl << std::endl;
-            }
-        }
-
-        srch = true;
-        int beginOffset = 0;
-
-        while(srch){
-            std::cout << "Enter the ending article title, or type at least 3 characters to search: ";
-            std::getline(std::cin >> std::ws, goal);
-
-            while(goal == chosenBegin){
-                std::cout << std::endl << "You may not use the same article, please enter another: ";
-                std::getline(std::cin >> std::ws, goal);
-            }
-
-            while(begin.size() < 3){
-                std::cout << std::endl << "Query is too short, please enter another: " << std::endl;
-                std::getline(std::cin >> std::ws, goal);
-            }
-            std::cout << std::endl << "Searching with the phrase '" << goal << "'" << std::endl;
-
-            std::vector<string> opts = ws.lookupName(goal);
-
-            if(opts.size() > 0){
-                std::cout << "List of potential options: " << std::endl;
-                int i = 1;
-                for(const string & op : opts){
-                    if(op == chosenBegin){
-                        beginOffset++;
-                        continue;
-                    }
-                    std::cout << i << ". " << op << std::endl;
-                    if((i % 15) == 0){
-                        escloop = true;
-                        while(escloop){
-                            std::cout << "More options available, print more options (Yes / No): ";
-                            std::cin >> yesno;
-                            transform(yesno.begin(), yesno.end(), yesno.begin(), toupper);
-                            if(yesno != "YES" && yesno != "NO"){
-                                std::cout << std::endl << "Invalid input, Try again." << std::endl;
-                                continue;
-                            } else {
-                                std::cout << std::endl;
-                                escloop = false;
-                            }
-                        }
-                        if(yesno == "NO"){
-                            break;
-                        }
-                    }
-                    i++;
-                }
-                bool optChosen = true;
-                int option;
-                while(optChosen){
-                    std::cout << "Type the number of the option you would like: ";
-                    std::cin >> option;
-                    if((option < 1) || (option > i)){
-                        std::cout << std::endl << "Invalid input, Try again." << std::endl;
-                        continue;
-                    } else {
-                        std::cout << std::endl;
-                        optChosen = false;
-                        srch = false;
-                        chosenEnd = opts[option + beginOffset - 1];
-                        endINT = ws.intFromName(chosenEnd);
-                    }
-                }
-            } else {
-                std::cout << "No search results found, try again." << std::endl << std::endl;
-            }
-        }
-
+        // find the path and then their names
         vector<string> path = ws.pathAsNames(ws.shortestPathBFS(beginINT, endINT));
 
+        // print out the path
         std::cout << "Shortest path is of length " << path.size() << ":" << std::endl;
         for (size_t i = 0; i < path.size(); i++)
         {
@@ -182,25 +66,39 @@ int main()
             std::cout << " -> ";
         }
 
+        // find out if the user wants to run again
         escloop = true;
         while(escloop){
+            // ask if more options should be printed
             std::cout << std::endl << "Want to try again? (Yes / No): ";
             std::cin >> yesno;
+
+            // modify answer to upper case, and change y into yes and n into no for better usability
             transform(yesno.begin(), yesno.end(), yesno.begin(), toupper);
+            if(yesno == "Y"){
+                yesno = "YES";
+            } else if(yesno == "N"){
+                yesno = "NO";
+            }
+
+            // test case
             if(yesno != "YES" && yesno != "NO"){
+                // if its not yes or no, its an invalid input
                 std::cout << std::endl << "Invalid input, Try again." << std::endl;
-                continue;
             } else {
+                // if its yes or no, its an valid input, act accordingly
                 std::cout << std::endl;
                 escloop = false;
             }
         }
+        std::cout << std::endl << std::endl;
+
+        // if the user wants to stop, break the search.
         if(yesno == "NO"){
             tryAgain = false;
             break;
         }
-
-        std::cout << std::endl << std::endl;
     }
+    std::cout << "Thank you." << std::endl;
     return 0;
 }
