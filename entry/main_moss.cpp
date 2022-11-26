@@ -8,6 +8,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <chrono>
 
 int main()
 {
@@ -31,16 +32,34 @@ int main()
 
     /*
     // small version
+    // time the import
     std::cout << "Importing limited data..." << std::endl;
+    auto startIMDAT = std::chrono::high_resolution_clock::now();
     ws.importData("../data/wiki-nodes.txt");
-    std::cout << "Done. Importing names..." << std::endl;
+    auto stopIMDAT = std::chrono::high_resolution_clock::now();
+
+    // calculate time
+    auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
+    double IMDATseconds = ((durationIMDAT.count()) % 6000000) / 100000;
+    int IMDATminutes = (durationIMDAT.count()) / 6000000;
+    std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
+    std::cout << "Importing names..." << std::endl;
     ws.importNames("../data/wiki-names.txt");
     */
 
     // regular version
-    std::cout << "Importing full data... (this may take some time)" << std::endl;
+    // time the import
+    std::cout << "Importing full data... (this may take some time)." << std::endl;
+    auto startIMDAT = std::chrono::high_resolution_clock::now();
     ws.importData("../data/wiki-topcats.txt");
-    std::cout << "Done. Importing names..." << std::endl;
+    auto stopIMDAT = std::chrono::high_resolution_clock::now();
+
+    // calculate time
+    auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
+    double IMDATseconds = double((durationIMDAT.count()) % 60000000) / 1000000;
+    int IMDATminutes = (durationIMDAT.count()) / 60000000;
+    std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
+    std::cout << "Importing names..." << std::endl;
     ws.importNames("../data/wiki-topcats-page-names.txt");
 
     std::cout << "... Done" << std::endl << std::endl;
@@ -54,23 +73,122 @@ int main()
         // find the endingle title. use the title from the first one
         endINT = ws.findName(false, ws.nameFromInt(beginINT));
 
-        // find the path and then their names
-        vector<string> path = ws.pathAsNames(ws.shortestPathBFS(beginINT, endINT));
+        // find the path using BFS and then their names, and time it
+        auto startBFS = std::chrono::high_resolution_clock::now();
+        vector<string> pathBFS = ws.pathAsNames(ws.shortestPathBFS(beginINT, endINT));
+        auto stopBFS = std::chrono::high_resolution_clock::now();
+
+        // calculate time
+        auto durationBFS = std::chrono::duration_cast<std::chrono::microseconds>(stopBFS - startBFS);
+        double BFSinSec = double(durationBFS.count()) / 1000000;
 
         // print out the path
-        std::cout << "Shortest path is of length " << path.size() << ":" << std::endl;
-        for (size_t i = 0; i < path.size(); i++)
+        std::cout << "Search using BFS took " << BFSinSec << " seconds." << std::endl;
+        std::cout << "Path is of length " << pathBFS.size() << ":" << std::endl;
+        for (size_t i = 0; i < pathBFS.size(); i++)
         {
-            std::cout << path.at(i);
-            if (i != path.size() - 1)
-            std::cout << " -> ";
+            std::cout << pathBFS.at(i);
+            if(i != pathBFS.size() - 1){
+                std::cout << " -> ";
+            }
+        }
+
+        // find the path using IDDFS and then their names, and time it
+        auto startIDDFS = std::chrono::high_resolution_clock::now();
+        vector<string> pathIDDFS = ws.pathAsNames(ws.shortestPathIDDFS(beginINT, endINT));
+        auto stopIDDFS = std::chrono::high_resolution_clock::now();
+
+        // calculate time
+        auto durationIDDFS = std::chrono::duration_cast<std::chrono::microseconds>(stopIDDFS - startIDDFS);
+        double IDDFSinSec = double(durationIDDFS.count()) / 1000000;
+
+        // print out the path
+        std::cout << std::endl << std::endl << "Search using IDDFS took: " << IDDFSinSec << " seconds." << std::endl;
+        std::cout << "Path is of length " << pathIDDFS.size() << ":" << std::endl;
+        for (size_t i = 0; i < pathIDDFS.size(); i++)
+        {
+            std::cout << pathIDDFS.at(i);
+            if(i != pathIDDFS.size() - 1){
+                std::cout << " -> ";
+            }
+        }
+
+        // ask if user wants to see the options in reverse
+        escloop = true;
+        while(escloop){
+            // ask if you want to try again
+            std::cout << std::endl << std::endl << "Want to try try search in reverse? (Yes / No): ";
+            std::cin >> yesno;
+
+            // modify answer to upper case, and change y into yes and n into no for better usability
+            transform(yesno.begin(), yesno.end(), yesno.begin(), toupper);
+            if(yesno == "Y"){
+                yesno = "YES";
+            } else if(yesno == "N"){
+                yesno = "NO";
+            }
+
+            // test case
+            if(yesno != "YES" && yesno != "NO"){
+                // if its not yes or no, its an invalid input
+                std::cout << std::endl << "Invalid input, Try again." << std::endl;
+            } else {
+                // if its yes or no, its an valid input, act accordingly
+                std::cout << std::endl;
+                escloop = false;
+            }
+        }
+
+        // if yes, perform the previous in reverse
+        if(yesno == "YES"){
+            // find the path using BFS and then their names, and time it
+            startBFS = std::chrono::high_resolution_clock::now();
+            pathBFS.clear();
+            pathBFS = ws.pathAsNames(ws.shortestPathBFS(endINT, beginINT));
+            stopBFS = std::chrono::high_resolution_clock::now();
+
+            // calculate time
+            durationBFS = std::chrono::duration_cast<std::chrono::microseconds>(stopBFS - startBFS);
+            BFSinSec = double(durationBFS.count()) / 1000000;
+
+            // print out the path
+            std::cout << "Search using BFS took " << BFSinSec << " seconds." << std::endl;
+            std::cout << "Path is of length " << pathBFS.size() << ":" << std::endl;
+            for (size_t i = 0; i < pathBFS.size(); i++)
+            {
+                std::cout << pathBFS.at(i);
+                if(i != pathBFS.size() - 1){
+                    std::cout << " -> ";
+                }
+            }
+
+            // find the path using IDDFS and then their names, and time it
+            startIDDFS = std::chrono::high_resolution_clock::now();
+            pathIDDFS.clear();
+            pathIDDFS = ws.pathAsNames(ws.shortestPathIDDFS(endINT, beginINT));
+            stopIDDFS = std::chrono::high_resolution_clock::now();
+
+            // calculate time
+            durationIDDFS = std::chrono::duration_cast<std::chrono::microseconds>(stopIDDFS - startIDDFS);
+            IDDFSinSec = double(durationIDDFS.count()) / 1000000;
+
+            // print out the path
+            std::cout << std::endl << std::endl << "Search using IDDFS took: " << IDDFSinSec << " seconds." << std::endl;
+            std::cout << "Path is of length " << pathIDDFS.size() << ":" << std::endl;
+            for (size_t i = 0; i < pathIDDFS.size(); i++)
+            {
+                std::cout << pathIDDFS.at(i);
+                if(i != pathIDDFS.size() - 1){
+                    std::cout << " -> ";
+                }
+            }
         }
 
         // find out if the user wants to run again
         escloop = true;
         while(escloop){
-            // ask if more options should be printed
-            std::cout << std::endl << "Want to try again? (Yes / No): ";
+            // ask if you want to try again
+            std::cout << std::endl << std::endl << "Want to try again? (Yes / No): ";
             std::cin >> yesno;
 
             // modify answer to upper case, and change y into yes and n into no for better usability
