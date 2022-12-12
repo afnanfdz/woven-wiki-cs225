@@ -177,6 +177,69 @@ void compareSolutionIDDFS(string file_name)
     }
 }
 
+/**
+ * @author Vuc
+ * Imports the handwritten true Betweenness Centraity for a given graph.
+ *
+ * @returns An unordered map of solutions.
+ * The key contains the vertex index inputs,
+ * The value contains the correct BC value.
+ */
+
+unordered_map<int, double> readSolutionsBC(string file_dir)
+{
+    unordered_map<int, double> result;
+
+    ifstream file;
+    file.open(file_dir);
+
+    if (file.is_open())
+    {
+        int line_1;
+        double line_2;
+        while (file >> line_1 >> line_2)
+        {
+            result.insert({line_1, line_2});
+        }
+    }
+
+    return result;
+}
+
+/**
+ * @author Vuc
+ *
+ * Takes a map of solutions and tests it against our implementations
+ * @param file_name Name of the .txt data file.
+ * Assumed to have a SOLUTIONS_ counterpart.
+ * Assumed to be in the ./tests folder.
+ */
+void compareSolutionBC(string file_name)
+{
+    const unordered_map<int, double> &sol = readSolutionsBC("../tests/SOLUTIONS_" + file_name + ".txt");
+    WikiSearch ws;
+    ws.importData("../tests/" + file_name + ".txt");
+
+    unordered_map<int, double> ws_betweenness = ws.betweennessCentrality();
+
+    // std::cout << "SOLUTION:" << std::endl;
+    // for (const pair<const int, int> &p : sol)
+    // {
+    //     std::cout << p.first << ", " << p.second << std::endl;
+    // }
+
+    // std::cout << "REAL:" << std::endl;
+    // for (const pair<const int, int> &p : ws_betweenness)
+    // {
+    //     std::cout << p.first << ", " << p.second << std::endl;
+    // }
+
+    for (const pair<const int, double> &p : sol)
+    {
+        REQUIRE(ws_betweenness.at(p.first) == p.second);
+    }
+}
+
 /** END OF TEST UTILITIES */
 
 //////////////////////////////////////////////////
@@ -204,6 +267,12 @@ TEST_CASE("Correct Shortest Paths (IDDFS)", "[IDDFS]")
     {
         compareSolutionIDDFS(testfile);
     }
+}
+
+TEST_CASE("Correct Betweenness Centrality", "[BC]")
+{
+    compareSolutionBC("BC_graph_1");
+    compareSolutionBC("BC_graph_2");
 }
 
 /** END OF TEST CASES */
