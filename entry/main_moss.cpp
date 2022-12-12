@@ -133,13 +133,17 @@ int main()
         double BFSinSec = double(durationBFS.count()) / 1000000;
 
         // print out the path
-        std::cout << "Search using BFS took " << BFSinSec << " seconds." << std::endl;
-        std::cout << "Path is of length " << pathBFS.size() << ":" << std::endl;
-        for (size_t i = 0; i < pathBFS.size(); i++)
-        {
-            std::cout << pathBFS.at(i);
-            if(i != pathBFS.size() - 1){
-                std::cout << " -> ";
+        if(pathBFS.size() < 1){
+            std::cout << "No path was found using BFS." << std::endl;
+        } else {
+            std::cout << "Search using BFS took " << BFSinSec << " seconds." << std::endl;
+            std::cout << "Path is of length " << pathBFS.size() << ":" << std::endl;
+            for (size_t i = 0; i < pathBFS.size(); i++)
+            {
+                std::cout << pathBFS.at(i);
+                if(i != pathBFS.size() - 1){
+                    std::cout << " -> ";
+                }
             }
         }
 
@@ -153,13 +157,17 @@ int main()
         double IDDFSinSec = double(durationIDDFS.count()) / 1000000;
 
         // print out the path
-        std::cout << std::endl << std::endl << "Search using IDDFS took: " << IDDFSinSec << " seconds." << std::endl;
-        std::cout << "Path is of length " << pathIDDFS.size() << ":" << std::endl;
-        for (size_t i = 0; i < pathIDDFS.size(); i++)
-        {
-            std::cout << pathIDDFS.at(i);
-            if(i != pathIDDFS.size() - 1){
-                std::cout << " -> ";
+        if(pathBFS.size() < 1){
+            std::cout << "No path was found using IDDFS." << std::endl;
+        } else {
+            std::cout << std::endl << std::endl << "Search using IDDFS took: " << IDDFSinSec << " seconds." << std::endl;
+            std::cout << "Path is of length " << pathIDDFS.size() << ":" << std::endl;
+            for (size_t i = 0; i < pathIDDFS.size(); i++)
+            {
+                std::cout << pathIDDFS.at(i);
+                if(i != pathIDDFS.size() - 1){
+                    std::cout << " -> ";
+                }
             }
         }
 
@@ -202,13 +210,17 @@ int main()
             BFSinSec = double(durationBFS.count()) / 1000000;
 
             // print out the path
-            std::cout << "Search using BFS took " << BFSinSec << " seconds." << std::endl;
-            std::cout << "Path is of length " << pathBFS.size() << ":" << std::endl;
-            for (size_t i = 0; i < pathBFS.size(); i++)
-            {
-                std::cout << pathBFS.at(i);
-                if(i != pathBFS.size() - 1){
-                    std::cout << " -> ";
+            if(pathBFS.size() < 1){
+                std::cout << "No path was found using BFS." << std::endl;
+            } else {
+                std::cout << "Search using BFS took " << BFSinSec << " seconds." << std::endl;
+                std::cout << "Path is of length " << pathBFS.size() << ":" << std::endl;
+                for (size_t i = 0; i < pathBFS.size(); i++)
+                {
+                    std::cout << pathBFS.at(i);
+                    if(i != pathBFS.size() - 1){
+                        std::cout << " -> ";
+                    }
                 }
             }
 
@@ -223,13 +235,17 @@ int main()
             IDDFSinSec = double(durationIDDFS.count()) / 1000000;
 
             // print out the path
-            std::cout << std::endl << std::endl << "Search using IDDFS took: " << IDDFSinSec << " seconds." << std::endl;
-            std::cout << "Path is of length " << pathIDDFS.size() << ":" << std::endl;
-            for (size_t i = 0; i < pathIDDFS.size(); i++)
-            {
-                std::cout << pathIDDFS.at(i);
-                if(i != pathIDDFS.size() - 1){
-                    std::cout << " -> ";
+            if(pathBFS.size() < 1){
+                std::cout << "No path was found using IDDFS." << std::endl;
+            } else {
+                std::cout << std::endl << std::endl << "Search using IDDFS took: " << IDDFSinSec << " seconds." << std::endl;
+                std::cout << "Path is of length " << pathIDDFS.size() << ":" << std::endl;
+                for (size_t i = 0; i < pathIDDFS.size(); i++)
+                {
+                    std::cout << pathIDDFS.at(i);
+                    if(i != pathIDDFS.size() - 1){
+                        std::cout << " -> ";
+                    }
                 }
             }
         }
