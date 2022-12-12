@@ -177,6 +177,57 @@ void compareSolutionIDDFS(string file_name)
     }
 }
 
+/**
+ * @author Vuc
+ * Imports the handwritten true Betweenness Centraity for a given graph.
+ *
+ * @returns An unordered map of solutions.
+ * The key contains the vertex index inputs,
+ * The value contains the correct BC value.
+ */
+
+unordered_map<int, int> readSolutionsBC(string file_dir)
+{
+    unordered_map<int, int> result;
+
+    ifstream file;
+    file.open(file_dir);
+
+    if (file.is_open())
+    {
+        int line_1;
+        int line_2;
+        while (getline(file, line_1) && getline(file, line_2))
+        {
+            result.insert({line_1, line_2});
+        }
+    }
+
+    return result;
+}
+
+/**
+ * @author Vuc
+ *
+ * Takes a map of solutions and tests it against our implementations
+ * @param file_name Name of the .txt data file.
+ * Assumed to have a SOLUTIONS_ counterpart.
+ * Assumed to be in the ./tests folder.
+ */
+void compareSolutionBC(string file_name)
+{
+    const unordered_map<int, int> &sol = readSolutionsBC("../tests/SOLUTIONS_" + file_name + ".txt");
+    WikiSearch ws;
+    ws.importData("../tests/" + file_name + ".txt");
+
+    // unordered_map<int, int> ws_betweenness = ws.BetweennessCentrality();
+
+    for (const pair<const int, int> &p : sol)
+    {
+        // REQUIRE(ws_betweenness.at(p.first) == p.second);
+    }
+}
+
 /** END OF TEST UTILITIES */
 
 //////////////////////////////////////////////////
@@ -204,6 +255,11 @@ TEST_CASE("Correct Shortest Paths (IDDFS)", "[IDDFS]")
     {
         compareSolutionIDDFS(testfile);
     }
+}
+
+TEST_CASE("Correct Betweenness Centrality", "[BC]")
+{
+    compareSolutionBC("BC_graph_1");
 }
 
 /** END OF TEST CASES */
