@@ -16,9 +16,12 @@ unordered_map<int, int> WikiSearch::betweennessCentrality() const
         result[idx] = 0;
     }
 
+    int count = 1;
+    int max = getGraph().size();
+
     for (int starting_node : getNodes())
     {
-        std::cout << "s = " << starting_node << std::endl;
+        std::cout << count++ << " / " << max << " complete..." << std::endl;
 
         stack<int> s;
         unordered_map<int, vector<int>> predecessors;
