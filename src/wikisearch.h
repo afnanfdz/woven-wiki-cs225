@@ -101,6 +101,8 @@ public: // Project Algorithms
      */
     vector<int> shortestPathIDDFS(int start, int goal) const;
 
+    unordered_map<int, int> betweennessCentrality() const;
+
 private: // Private functions
     /**
      * Helper to shortestPathIDDFS().

@@ -197,7 +197,7 @@ unordered_map<int, int> readSolutionsBC(string file_dir)
     {
         int line_1;
         int line_2;
-        while (getline(file, line_1) && getline(file, line_2))
+        while (file >> line_1 >> line_2)
         {
             result.insert({line_1, line_2});
         }
@@ -220,11 +220,23 @@ void compareSolutionBC(string file_name)
     WikiSearch ws;
     ws.importData("../tests/" + file_name + ".txt");
 
-    // unordered_map<int, int> ws_betweenness = ws.BetweennessCentrality();
+    unordered_map<int, int> ws_betweenness = ws.betweennessCentrality();
+
+    std::cout << "SOLUTION:" << std::endl;
+    for (const pair<const int, int> &p : sol)
+    {
+        std::cout << p.first << ", " << p.second << std::endl;
+    }
+
+    std::cout << "REAL:" << std::endl;
+    for (const pair<const int, int> &p : ws_betweenness)
+    {
+        std::cout << p.first << ", " << p.second << std::endl;
+    }
 
     for (const pair<const int, int> &p : sol)
     {
-        // REQUIRE(ws_betweenness.at(p.first) == p.second);
+        REQUIRE(ws_betweenness.at(p.first) == p.second);
     }
 }
 
@@ -260,6 +272,7 @@ TEST_CASE("Correct Shortest Paths (IDDFS)", "[IDDFS]")
 TEST_CASE("Correct Betweenness Centrality", "[BC]")
 {
     compareSolutionBC("BC_graph_1");
+    compareSolutionBC("BC_graph_2");
 }
 
 /** END OF TEST CASES */
