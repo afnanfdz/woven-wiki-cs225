@@ -138,7 +138,7 @@ int WikiSearch::findName(bool startName, string begTitle) const
         // we dont wan't to confuse users by giving them too many results.
         // require them for a longer, more specific search, to make life easier
         while(title.size() < 3){
-            std::cout << std::endl << "Query is too short, please enter another: " << std::endl;
+            std::cout << std::endl << "Query is too short, please enter another: ";
             std::getline(std::cin >> std::ws, title);
         }
 
