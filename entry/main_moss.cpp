@@ -58,19 +58,43 @@ int main()
 
     if(yesno == "YES"){
         // regular version
-        // time the import
-        std::cout << "Importing full data... (this may take some time)." << std::endl;
-        auto startIMDAT = std::chrono::high_resolution_clock::now();
-        ws.importData("../data/wiki-topcats.txt");
-        auto stopIMDAT = std::chrono::high_resolution_clock::now();
 
-        // calculate time
-        auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
-        double IMDATseconds = double((durationIMDAT.count()) % 60000000) / 1000000;
-        int IMDATminutes = (durationIMDAT.count()) / 60000000;
-        std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
-        std::cout << "Importing names..." << std::endl;
-        ws.importNames("../data/wiki-topcats-page-names.txt");
+        // check to see if full dataset exists. default to small if it doesn't
+        ifstream file;
+        file.open("../data/wiki-topcats.txt");
+        if(!(file.is_open())){
+            std::cout << "Full dataset may be missing from your computer. Check github for instructions." << std::endl << "Using Small Dataset instead." << std::endl;
+            // small version
+            // time the import
+            std::cout << "Importing limited data..." << std::endl;
+            auto startIMDAT = std::chrono::high_resolution_clock::now();
+            ws.importData("../data/wiki-nodes.txt");
+            auto stopIMDAT = std::chrono::high_resolution_clock::now();
+
+            // calculate time
+            auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
+            double IMDATseconds = double((durationIMDAT.count()) % 60000000) / 1000000;
+            int IMDATminutes = (durationIMDAT.count()) / 60000000;
+            std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
+            std::cout << "Importing names..." << std::endl;
+            ws.importNames("../data/wiki-names.txt");
+        } else {
+            file.close();
+
+            // time the import
+            std::cout << "Importing full data... (this may take some time)." << std::endl;
+            auto startIMDAT = std::chrono::high_resolution_clock::now();
+            ws.importData("../data/wiki-topcats.txt");
+            auto stopIMDAT = std::chrono::high_resolution_clock::now();
+
+            // calculate time
+            auto durationIMDAT = std::chrono::duration_cast<std::chrono::microseconds>(stopIMDAT - startIMDAT);
+            double IMDATseconds = double((durationIMDAT.count()) % 60000000) / 1000000;
+            int IMDATminutes = (durationIMDAT.count()) / 60000000;
+            std::cout << "Import took: " << IMDATminutes << " minutes and " << IMDATseconds << " seconds." << std::endl;
+            std::cout << "Importing names..." << std::endl;
+            ws.importNames("../data/wiki-topcats-page-names.txt");
+        }
     } else {
         // small version
         // time the import
