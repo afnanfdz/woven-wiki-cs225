@@ -157,7 +157,7 @@ int main()
         double IDDFSinSec = double(durationIDDFS.count()) / 1000000;
 
         // print out the path
-        if(pathBFS.size() < 1){
+        if(pathIDDFS.size() < 1){
             std::cout << "No path was found using IDDFS." << std::endl;
         } else {
             std::cout << std::endl << std::endl << "Search using IDDFS took: " << IDDFSinSec << " seconds." << std::endl;
@@ -235,7 +235,7 @@ int main()
             IDDFSinSec = double(durationIDDFS.count()) / 1000000;
 
             // print out the path
-            if(pathBFS.size() < 1){
+            if(pathIDDFS.size() < 1){
                 std::cout << "No path was found using IDDFS." << std::endl;
             } else {
                 std::cout << std::endl << std::endl << "Search using IDDFS took: " << IDDFSinSec << " seconds." << std::endl;
