@@ -21,7 +21,14 @@ add_library(nim_graph ${nim_graph_sources})
 target_include_directories(nim_graph PRIVATE ${lib_dir})
 target_link_libraries(nim_graph PRIVATE cs225 lodepng)
 
+# Add heap library.
+set(heap_dir ${lib_dir}/heap)
+file(GLOB_RECURSE heap_sources CONFIGURE_DEPENDS ${heap_dir}/*.hpp)
+add_library(heap ${heap_sources})
+target_include_directories(heap PRIVATE ${lib_dir})
+target_link_libraries(heap PRIVATE cs225 lodepng)
+
 # Add overall libs library.
 add_library(libs INTERFACE)
 target_include_directories(libs INTERFACE ${lib_dir})
-target_link_libraries(libs INTERFACE cs225 nim_graph)
+target_link_libraries(libs INTERFACE cs225 nim_graph heap)
