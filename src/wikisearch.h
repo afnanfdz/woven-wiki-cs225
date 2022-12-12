@@ -50,6 +50,19 @@ public: // Utilities
     int intFromName(string name) const;
 
     /**
+     * @param titleIDX Exact title IDX to look up
+     * @returns The title associated with this int
+     */
+    string nameFromInt(int titleIDX) const;
+
+    /**
+     * @param startName Determine if we're using the starting or ending title
+     * @param begTitle If the beginning title hs been chosen already, there are some minor differences in the search method
+     * @returns the int index of the name
+     */
+    int findName(bool startName, string begTitle) const;
+
+    /**
      * @param path Fragment of name to look up
      * @returns A vector of possible article names
      */
