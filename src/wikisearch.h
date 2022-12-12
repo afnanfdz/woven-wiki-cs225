@@ -97,9 +97,23 @@ public: // Project Algorithms
      *
      * @param start The starting article index.
      * @param goal The destination article index.
-     * @returns One shortest path from start to goal, or empty vector if not found.
+     * @returns One shortest path from start to goal, or empty vector if not found
      */
     vector<int> shortestPathIDDFS(int start, int goal) const;
+
+    /**
+     * https://www.cl.cam.ac.uk/teaching/1617/MLRD/handbook/brandes.pdf (or .html)
+     * Mostly based off the pseudocode from page 4, and also the "magic" function on page 7.
+     * 
+     * Betweenness centrality of a node is basically the number of shortest paths that
+     * that node appears in, scaled by the number of shortest paths if its not unique.
+     * 
+     * Worst case time: O(|V||E|)
+     * Worst case memory: O(|V| + |E|)
+     * 
+     * @returns A map from every node to its betweenness centrality
+     */
+    unordered_map<int, double> betweennessCentrality() const;
 
 private: // Private functions
     /**
@@ -109,6 +123,8 @@ private: // Private functions
      * @returns Empty if goal not found; vector of REVERSED path otherwise
      */
     vector<int> limitedDFS(int source, int goal, int limit) const;
+
+    
 
 private:
     unordered_map<int, string> names_;
