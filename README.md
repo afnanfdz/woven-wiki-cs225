@@ -1,5 +1,9 @@
 # WOVEN WIKIS 
 
+## Video Presentation
+
+[The video for this project can be found here](https://drive.google.com/file/d/1kVqY-H6YG55I5Cbi6DPcOj7SP8CGQcK6/view?usp=sharing)
+
 Our project is about getting from article A to article B with as few steps as possible, and revealing the significance of each Wikipedia article as a step in shortest paths.
 
 Wikipedia articles have outgoing links to other Wikipedia articles. We can express this network as a graph with directed and (in our case) unweighted edges.
@@ -18,6 +22,4 @@ The entryfile `entry/main_moss.cpp` contains the interface for selecting a start
 
 The entryfile `entry/main_awelotta.cpp` contains another interface but specifically for calculating betweenness centrality. It accepts `NUM_NODES` as a single argument. The program will generate a shrunk dataset with NUM_NODES nodes and then write a sorted list of betweenness centrality to `outputs/betweenness_centrality/sorted`. I [Sean] recommend using NUM_NODES less than 5000 or so, because it can take quite a long time (Brandes's algorithm is $O(n^3)$ time complexity). There are few precomputed outputs from test runs that may be interesting to look out, mostly there for historical interest.
 
-## Video Presentation
 
-[The video for this project can be found here](https://drive.google.com/file/d/1kVqY-H6YG55I5Cbi6DPcOj7SP8CGQcK6/view?usp=sharing)
