@@ -2,7 +2,7 @@
 
 ## Video Presentation
 
-[The video for this project can be found here](https://drive.google.com/file/d/1kVqY-H6YG55I5Cbi6DPcOj7SP8CGQcK6/view?usp=sharing)
+[The video for this project can be found here.](https://drive.google.com/file/d/1kVqY-H6YG55I5Cbi6DPcOj7SP8CGQcK6/view?usp=sharing)
 
 Our project is about getting from article A to article B with as few steps as possible, and revealing the significance of each Wikipedia article as a step in shortest paths.
 
